@@ -1,12 +1,14 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
 import { clearStorege } from "../../utils/token";
+import {useState} from 'react';
 
 interface PropsType {
   SetDropDown: (DropDown: boolean) => void;
+  setSet: (Set: boolean) => void;
 }
 
-function ProfileDropDown({ SetDropDown }: PropsType) {
+function ProfileDropDown({ SetDropDown,setSet}: PropsType) {
   return (
     <Background onClick={() => SetDropDown(false)}>
       <DropDownBox onClick={e => e.stopPropagation()}>
@@ -33,7 +35,7 @@ function ProfileDropDown({ SetDropDown }: PropsType) {
         </UserInfoBox>
         <BtnBox>
           <div>
-            <Button>계정설정</Button>
+            <Button onClick={() => setSet(true)}>계정설정</Button>
             <Button>마이페이지</Button>
           </div>
           <Button onClick={clearStorege}>로그아웃</Button>

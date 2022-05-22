@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import styled from "@emotion/styled";
 import CreatePost from "../../apis/post/create";
-import { PostRequestType } from "../../apis/apiType";
+import { PostRequestType } from "../../apis/post/create";
 import Image from "next/image";
 
 interface PropsType {

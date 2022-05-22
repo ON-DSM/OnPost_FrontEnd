@@ -1,6 +1,6 @@
 import { developerInfo } from "../../utils/constant/Introduce";
 import { useRecoilState } from "recoil";
-import { ProfileState } from "../../recoil/profile";
+import { ProfileState } from "../../recoil/proflie";
 import ExplainContainer from "./Explain";
 import Profile from "./Profile";
 import styled from "@emotion/styled";

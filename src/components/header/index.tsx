@@ -6,26 +6,31 @@ import Image from "next/image";
 import { getToken } from "../../utils/token";
 import MyPage from "./MyPage";
 import ProfileDropDown from "./ProfileDropdown";
+import ProfileSetting from "../ProfileSetting/ProfileSetting";
 
 function Header() {
   const [height, setHeight] = useState<number>(60);
   const [Modal, SetModal] = useState<boolean>(false);
   const [DropDown, SetDropDown] = useState<boolean>(false);
+  const [Set,setSet] = useState<boolean>(false);
   useEffect(() => {
     window.addEventListener("scroll", () => {
       if (window.scrollY > 500) setHeight(45);
       else setHeight(60);
     });
   }, []);
+  
+
   return (
     <>
+      {Set && <ProfileSetting setSet={setSet}/>}
       <HeaderContainer height={height}>
         <Link href='/'>
           <HeaderLogo>온포스트</HeaderLogo>
         </Link>
         <HeaderNavBar>
           <Link href='/IntroducePage'>개발자 소개</Link>
-          {getToken().accessToken && getToken().refreshToken ? (
+          {false ? ( ///getToken().accessToken && getToken().refreshToken
             <>
               <Link href='/post/CreatePostPage'>글작성하기</Link>
               <Image width={16} height={20} src='/svg/alarmIcon.svg' />
@@ -33,8 +38,9 @@ function Header() {
                 onClick={() => SetDropDown(true)}
                 width={30}
                 height={30}
-                src='/images/IntroduceDeveloper/JosanghyeonProfile.png'
+                src='/images/Introduce/JosanghyeonProfile.png'
               />
+
             </>
           ) : (
             <Link href='/auth/Login'>로그인/회원가입</Link>
@@ -45,14 +51,19 @@ function Header() {
             src='/images/Header/SearchIcon.png'
             alt='검색'
           />
+          
         </HeaderNavBar>
       </HeaderContainer>
+      
       {Modal && <MyPage SetModal={SetModal} />}
-      {DropDown && <ProfileDropDown SetDropDown={SetDropDown} />}
+      {DropDown && <ProfileDropDown SetDropDown={SetDropDown} setSet={setSet} />}
       <SearchResult />
     </>
   );
 }
+
+
+
 
 const HeaderContainer = styled.header<{ height: number }>`
   display: flex;
@@ -90,5 +101,15 @@ const HeaderNavBar = styled.nav`
 const SearchImage = styled(Image)`
   cursor: pointer;
 `;
+
+const ProfileImg = styled(Image)`
+  width:2rem;
+  height:2rem;
+  border-radius:1rem;
+`
+
+const writePost = styled.span`
+  
+`
 
 export default Header;

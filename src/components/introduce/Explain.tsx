@@ -1,7 +1,7 @@
-import styled from "@emotion/styled";
-import { ProfileState } from "../../recoil/profile";
-import { useRecoilState } from "recoil";
-import { developerInfoType } from "../../utils/constant/Introduce";
+import styled from '@emotion/styled';
+import { ProfileState } from '../../recoil/proflie';
+import { useRecoilState } from 'recoil';
+import { developerInfoType } from '../../utils/constant/Introduce';
 
 type PropsType = {
   UserInfo: developerInfoType;
@@ -40,10 +40,10 @@ const TriangleContainer = styled.div<{ ChooseProfile: number }>`
   justify-content: center;
   > div {
     transition: 0.7s;
-    margin-right: ${props => props.ChooseProfile == 0 && 1160}px;
-    margin-right: ${props => props.ChooseProfile == 1 && 601}px;
-    margin-left: ${props => props.ChooseProfile == 3 && 600}px;
-    margin-left: ${props => props.ChooseProfile == 4 && 1160}px;
+    margin-right: ${(props) => props.ChooseProfile == 0 && 1160}px;
+    margin-right: ${(props) => props.ChooseProfile == 1 && 601}px;
+    margin-left: ${(props) => props.ChooseProfile == 3 && 600}px;
+    margin-left: ${(props) => props.ChooseProfile == 4 && 1160}px;
   }
 `;
 

@@ -30,6 +30,8 @@ const ProfileName = styled.p`
 `;
 
 const ProfileImg = styled(Image)`
+width:100px;
+height:100px;
   > span {
     -webkit-user-drag: none;
   }
