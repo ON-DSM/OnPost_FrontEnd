@@ -9,7 +9,7 @@ interface PropsType {
   setclick: (isclick: number) => void;
 }
 
-export default function ModalInfo({ setclick }: PropsType) {
+export default function ModalInfo({ setclick }: PropsType) { ///유저정보 추가
   const [remain, setmain] = useState<boolean>(false);
   const [is, check] = useState<boolean>(false);
   const [change, setchange] = useState<number>(0);

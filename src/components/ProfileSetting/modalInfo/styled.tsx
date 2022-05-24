@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+///styled 분리
 
 export const ProfileImgBox = styled.div`
   display: flex;
