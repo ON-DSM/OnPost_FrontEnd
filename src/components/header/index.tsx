@@ -1,18 +1,23 @@
-import Link from "next/link";
+
 import { useEffect, useState } from "react";
-import SearchResult from "./SearchReuslt";
 import styled from "@emotion/styled";
-import Image from "next/image";
 import { getToken } from "../../utils/token";
 import MyPage from "./MyPage";
 import ProfileDropDown from "./ProfileDropdown";
 import ProfileSetting from "../ProfileSetting/ProfileSetting";
+import Belling from "./Belling";
+import Search from "./SearchReuslt";
+import {Link} from 'react-router-dom';
 
 function Header() {
   const [height, setHeight] = useState<number>(60);
   const [Modal, SetModal] = useState<boolean>(false);
   const [DropDown, SetDropDown] = useState<boolean>(false);
   const [Set,setSet] = useState<boolean>(false);
+  const [Bell,setbell] = useState<boolean>(false);
+  const [input,setinput] = useState<boolean>(false);
+  const [remain,setmain] = useState<boolean>(false);
+  
   useEffect(() => {
     window.addEventListener("scroll", () => {
       if (window.scrollY > 500) setHeight(45);
@@ -22,53 +27,65 @@ function Header() {
   
 
   return (
-    <>
-      {Set && <ProfileSetting setSet={setSet}/>}
-      <HeaderContainer height={height}>
-        <Link href='/'>
-          <HeaderLogo>온포스트</HeaderLogo>
-        </Link>
-        <HeaderNavBar>
-          <Link href='/IntroducePage'>개발자 소개</Link>
-          {false ? ( ///getToken().accessToken && getToken().refreshToken
-            <>
-              <Link href='/post/CreatePostPage'>글작성하기</Link>
-              <Image width={16} height={20} src='/svg/alarmIcon.svg' />
-              <Image
-                onClick={() => SetDropDown(true)}
-                width={30}
-                height={30}
-                src='/images/Introduce/JosanghyeonProfile.png'
-              />
+    <OverFlowBox>
+      <>
+        <HeaderContainer height={height}>
+          <Link to='/'>
+            <HeaderLogo>온포스트</HeaderLogo>
+          </Link>
+          <HeaderNavBar>
+            <Link to='/IntroducePage'>개발자 소개</Link>
+            {true ? ( //getToken().accessToken && getToken().refreshToken
+              <>
+                <Link to='/post/CreatePostPage'>글작성하기</Link>
+                <BallImg onClick={() => setbell(!Bell)} src='/svg/alarmIcon.svg' />
+                <ProfileImg
+                  onClick={() => SetDropDown(true)}
+                  src='/images/Introduce/JosanghyeonProfile.png'
+                />
+                
+              </>
+            ) : (
+              <Link to='/auth/Login'>로그인/회원가입</Link>
+            )}
+            <SearchImage
+              onClick={() => {
+                setinput(true)
+                setmain(true);
+              }}
+              src='/images/Header/SearchIcon.png'
+              alt='검색'
+            />
+            
+          </HeaderNavBar>
+        </HeaderContainer>
 
-            </>
-          ) : (
-            <Link href='/auth/Login'>로그인/회원가입</Link>
-          )}
-          <SearchImage
-            width={22}
-            height={22}
-            src='/images/Header/SearchIcon.png'
-            alt='검색'
-          />
-          
-        </HeaderNavBar>
-      </HeaderContainer>
-      
-      {Modal && <MyPage SetModal={SetModal} />}
-      {DropDown && <ProfileDropDown SetDropDown={SetDropDown} setSet={setSet} />}
-      <SearchResult />
-    </>
+        { remain && <Search setinput={setinput} input={input}/>}
+        {Modal && <MyPage SetModal={SetModal} />}
+        {DropDown && <ProfileDropDown SetDropDown={SetDropDown} setSet={setSet} />}
+        {Set && <ProfileSetting setSet={setSet}/>}
+        {Bell && <Belling setbell={setbell} />}
+      </>
+      </OverFlowBox>
   );
 }
 
+const OverFlowBox = styled.div`
+  position:relative;
+  overflow:hidden;
+`
 
+const BallImg = styled.img`
+  width:16px;
+  height:20px;
+`
 
 
 const HeaderContainer = styled.header<{ height: number }>`
   display: flex;
   justify-content: space-around;
   position: fixed;
+  z-index:1000;
   top: 0;
   left: 0;
   right: 0;
@@ -98,11 +115,13 @@ const HeaderNavBar = styled.nav`
   }
 `;
 
-const SearchImage = styled(Image)`
+const SearchImage = styled.img`
+  width:22px;
+  height:22px;
   cursor: pointer;
 `;
 
-const ProfileImg = styled(Image)`
+const ProfileImg = styled.img`
   width:2rem;
   height:2rem;
   border-radius:1rem;

@@ -7,6 +7,7 @@ export function customToast(msg: string, type: string) {
         autoClose: 1000,
         position: toast.POSITION.TOP_RIGHT,
       });
+      break;
     case "Error":
       toast.error(msg, {
         autoClose: 1000,

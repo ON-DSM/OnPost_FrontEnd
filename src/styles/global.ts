@@ -7,6 +7,9 @@ const global = css`
     padding: 0;
     box-sizing: border-box;
     font-family: "Noto Sans KR", sans-serif;
+    ::-webkit-scrollbar{
+      display:none;
+    }
   }
 `;
 

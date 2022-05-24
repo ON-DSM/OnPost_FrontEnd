@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useState } from "react";
 import styled from "@emotion/styled";
 
@@ -6,7 +5,7 @@ function CheckingBox() {
   const [CheckBox, SetCheckBox] = useState<boolean>(false);
   return (
     <CheckingContainer onClick={() => SetCheckBox(!CheckBox)}>
-      <Image
+      <img
         width={20}
         height={20}
         src={

@@ -1,11 +1,10 @@
 import styled from "@emotion/styled";
-import Image from "next/image";
 
 function PageNotFound() {
   return (
     <PageNotFoundContainer>
       <div>
-        <Image
+        <img
           alt='404'
           width='494px'
           height='328px'

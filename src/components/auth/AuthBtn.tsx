@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
-import Link from "next/link";
+import React from "react";
+import { Link } from 'react-router-dom';
 
 interface PropsType {
   login: boolean;
@@ -11,9 +12,11 @@ function AuthBtn({ login }: PropsType) {
       <LoginButton>{login ? "로그인" : "회원가입"}</LoginButton>
       <SignUpBox>
           {login ? "회원가입하려면 " : "돌아가려면 "}
-        <Link href={`/auth/${login ? "Signup" : "Login"}`}>
-          <SignUpButton>여기</SignUpButton>
-        </Link>
+          <Link to={`/auth/${login ? "Signup" : "Login"}`}>
+              <SignUpButton>
+              여기
+            </SignUpButton>
+          </Link>
           를 클릭해 주세요
       </SignUpBox>
     </>

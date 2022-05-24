@@ -1,7 +1,9 @@
-import Image from "next/image";
 import PostItem from "../Post/PostItem";
 import styled from "@emotion/styled";
-import {useState} from "react";
+import { useState} from "react";
+import { Link } from "react-router-dom";
+
+
 
 function Main() {
   const [click,setclick] = useState(true);
@@ -17,10 +19,8 @@ function Main() {
   return (
     <>
     <MainContainer>
-      <Image
-        width={1920}
-        height={776}
-        src='/images/main/MainImage.png'
+      <MainImg
+        src={'/images/main/MainImage.png'}
         alt='메인배너'
       />
       <SortBox>
@@ -46,21 +46,27 @@ function Main() {
         <PostItem />
       </PostContainer>
     </ReadContainer>
-    
   </>
   );
 }
 
+const MainImg = styled.img`
+  width:100%;
+`
+
 const PostContainer = styled.div`
-  width: 1280px;
+  width: 1340px;
+  @media (max-width: 1353px){
+    justify-content:center;
+  }
   display:flex;
   flex-wrap:wrap;
-  justify-content:space-between;
 `
 
 const MainContainer = styled.div`
   position: relative;
   display:flex;
+  padding-top:60px;
   flex-direction:column;
   align-items:center;
 `;

@@ -1,4 +1,4 @@
-import Image from 'next/image';
+
 import { FunctionComponent, FormEvent } from 'react';
 import styled from '@emotion/styled';
 
@@ -16,8 +16,8 @@ const FormBox: FunctionComponent<PropsType> = ({
   return (
     <div>
       <ImgBox>
-        <Image
-          layout="responsive"
+        <img
+          // layout="responsive"
           width="1920"
           height="1080"
           src="/images/Auth/BackgroundLoginImg.png"

@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
-import Image from "next/image";
 
 interface PropsType {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -30,7 +29,7 @@ function PasswordBox({ handleChange, passwordCheck }: PropsType) {
         />
       )}
       <EyeImgContainer>
-        <Image
+        <img
           width={20}
           height={20}
           onClick={() => SetHidePassword(!HidePassword)}

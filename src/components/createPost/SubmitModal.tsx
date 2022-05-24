@@ -2,7 +2,6 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import styled from "@emotion/styled";
 import CreatePost from "../../apis/post/create";
 import { PostRequestType } from "../../apis/post/create";
-import Image from "next/image";
 
 interface PropsType {
   SetOpenModal: (OpenModal: boolean) => void;
@@ -19,11 +18,10 @@ function SubmitModal({ handleChange, SetOpenModal, Text }: PropsType) {
   const Submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const a = CreatePost(Text);
-    console.log(a);
   };
 
   const handleChangeFile = (event: ChangeEvent<HTMLInputElement>) => {
-    let reader = new FileReader();
+    const reader = new FileReader();
     reader.onloadend = () => {
       const base64 = reader.result;
       if (base64) setImgBase64(base64.toString());
@@ -37,10 +35,8 @@ function SubmitModal({ handleChange, SetOpenModal, Text }: PropsType) {
   return (
     <Background onClick={() => SetOpenModal(false)}>
       <SubmitModalBox onSubmit={Submit} onClick={e => e.stopPropagation()}>
-        <div>
-          <div>{imgFile && <img width={200} src={imgBase64} />}</div>
-          <input type='file' onChange={handleChangeFile} />
-        </div>
+          <ImgBox>{imgFile && <FileImg src={imgBase64} />}</ImgBox>
+          <input accept=".gif, .jpg, .png" type='file' onChange={handleChangeFile} />
         <InputBox>
           <Simplecontent
             name='introduce'
@@ -54,7 +50,7 @@ function SubmitModal({ handleChange, SetOpenModal, Text }: PropsType) {
           <div>{Text.introduce.length}/150</div>
         </InputBox>
         <div>
-          <CancleBtn type='button'>취소</CancleBtn>
+          <CancleBtn onClick={() => SetOpenModal(false)} type='button'>취소</CancleBtn>
           <SubmitBtn type='submit'>작성하기</SubmitBtn>
         </div>
       </SubmitModalBox>
@@ -90,7 +86,9 @@ const Background = styled.div`
 
 const SubmitModalBox = styled.form`
   background-color: #ffffff;
-  text-align: center;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
   border-radius: 6px;
   width: 500px;
   height: 400px;
@@ -106,5 +104,19 @@ const CancleBtn = styled.button`
 const Simplecontent = styled.textarea`
   resize: none;
 `;
+
+const ImgBox = styled.div`
+  width:200px;
+  height:200px;
+`
+
+const FileImg = styled.img`
+    object-fit: cover;
+    width: 200px;
+    height: 200px;
+    display: block;
+    margin-bottom: 1.25rem;
+`
+
 
 export default SubmitModal;

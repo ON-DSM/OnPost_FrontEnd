@@ -1,35 +1,59 @@
-import styled from "@emotion/styled";
-import { PostRequestType } from "../../apis/post/create";
-import useForm from "../../hooks/useForm";
-import Image from "next/image";
-import SubmitModal from "./SubmitModal";
-import { useState } from "react";
+import styled from '@emotion/styled';
+import { PostRequestType } from '../../apis/post/create';
+import useForm from '../../hooks/useForm';
+import SubmitModal from './SubmitModal';
+import { useState, useEffect, useRef } from 'react';
+import ReturnTag from './ReturnTag';
 
 function CreatePost() {
   const [OpenModal, SetOpenModal] = useState<boolean>(false);
   const { Text, handleChange } = useForm<PostRequestType>({
-    title: "",
-    context: "",
-    id: "",
-    images: "",
-    introduce: "",
+    title: '',
+    context: '',
+    id: '',
+    images: '',
+    introduce: '',
   });
+  
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const textareaInputRef = useRef<HTMLDivElement | null>(null);
+  const [value, setValue] = useState<string>('');
+
+  const textAreaChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setValue(e.target.value);
+    handleChange(e);
+  };
+
+  useEffect(() => {
+    if (textareaRef && textareaRef.current) {
+      textareaRef.current.style.height = '0px';
+      const scrollHeight = textareaRef.current.scrollHeight;
+      textareaRef.current.style.height = scrollHeight + 'px';
+    }
+  }, [value]);
+
   return (
     <CreatePostBox>
-      <InputText>
+      <InputText ref={textareaInputRef}>
         <TitleInput
-          name='title'
-          onChange={handleChange}
-          placeholder='제목을 입력해주세요'
+          name="title"
+          placeholder="제목을 입력해주세요"
+          onChange={textAreaChange}
         />
+        <ReturnTag />
         <ContentInput
-          name='context'
-          onChange={handleChange}
-          placeholder='내용을 입력해주세요'
+          name="context"
+          placeholder="내용을 입력해주세요"
+          ref={textareaRef}
+          onChange={textAreaChange}
         />
         <OperationBar>
           <span>
-            <Image width='12' height='13.71' src='/svg/BackSpaceArrow.svg' />
+            <img width="12" height="13.71" src="/svg/BackSpaceArrow.svg" />
             뒤로가기
           </span>
           <span>
@@ -41,8 +65,10 @@ function CreatePost() {
         </OperationBar>
       </InputText>
       <PreviewText>
-        <h1>{Text.title}</h1>
-        <pre>{Text.context}</pre>
+        <h1 style={{ display: 'flex', flexWrap: 'wrap' }}>{Text.title}</h1>
+        <span style={{ display: 'flex', flexWrap: 'wrap' }}>
+          {Text.context}
+        </span>
       </PreviewText>
       {OpenModal && (
         <SubmitModal
@@ -78,34 +104,47 @@ const SubmitContent = styled.button`
 
 const CreatePostBox = styled.div`
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
 `;
 
 const PreviewText = styled.div`
   width: 50%;
   padding: 70px;
   background-color: #f2f2f8;
+  white-space: pre-wrap;
+  display:flex;
+  flex-direction:column;
+  flex-wrap:wrap;
+  flex: 1 1 0%;
+  overflow-y: auto;
 `;
 
 const InputText = styled.div`
   width: 50%;
+  height: 760px;
   padding: 70px;
 `;
 
 const TitleInput = styled.input`
   all: unset;
-  display: block;
+  width: 100%;
+  min-height: 80px;
+  height: auto;
   font-size: 30px;
   font-weight: bold;
-  padding: 10px;
-  border-bottom: 6px solid ${({ theme }) => theme.lightMode.main};
+  padding: 10px 0 0 0;
+  border-bottom: 6px solid #303f9f;
+  resize: none;
+  word-wrap: break-word;
 `;
 
 const ContentInput = styled.textarea`
   all: unset;
   width: 100%;
-  height: 60vh;
+  min-height: 30px;
+  height: auto;
   padding-top: 20px;
+  resize: none;
 `;
 
 const OperationBar = styled.div`
@@ -118,10 +157,8 @@ const OperationBar = styled.div`
   justify-content: space-between;
   align-items: center;
   box-shadow: rgb(0 0 0 / 10%) 0px -12px 12px -6px;
-  > :first-child {
-    margin-left: 20px;
-    cursor: pointer;
-  }
 `;
+
+
 
 export default CreatePost;

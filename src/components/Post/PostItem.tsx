@@ -1,69 +1,72 @@
-import Image from "next/image";
 import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
 
 export default function PostItem() {
+  const Id = 2;
     return (
-        <PostBox>
-          <PostImgBox>
-            <PostImg width={170} height={170} src="/imges/main/PostItemImg"/>
-            <PostDay>2022-2-24</PostDay>
-          </PostImgBox>
+        <Link to={`PostName/${Id}`}>
+            <PostBox>
+              <PostImgBox>
+                <PostImg width={170} height={170} src="/images/main/PostItemImg.png"/>
+                <PostDay>2022-2-24</PostDay>
+              </PostImgBox>
 
-          <PostDetailBox>
-            <PostNameBox>
-              <PostName>
-              별똥별과 비슷한 인공위성 잔해묾ㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㅇㄴ
-              </PostName>
-              <PostsubName>
-              인공위성이 수명을 다하여 떨어질 때 별똥별과 비슷한 형상을 띈다고 한다 
-              오늘 한 번 알아보자 안녕하십니까 저는 테스트를 하기위해 찾아온 김선생
-              이라고 합니다 잘 부탁드립니다 오늘은 제가 재미있는 테스트를 하나 해보려 
-              하는 데요? 한번 즐겁게 해봅시다 감사합니다 
-              </PostsubName>
-            </PostNameBox>
+              <PostDetailBox>
+                <PostNameBox>
+                  <PostName>
+                  별똥별과 비슷한 인공위성 잔해묾ㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㅇㄴ
+                  </PostName>
+                  <PostsubName>
+                  인공위성이 수명을 다하여 떨어질 때 별똥별과 비슷한 형상을 띈다고 한다 
+                  오늘 한 번 알아보자 안녕하십니까 저는 테스트를 하기위해 찾아온 김선생
+                  이라고 합니다 잘 부탁드립니다 오늘은 제가 재미있는 테스트를 하나 해보려 
+                  하는 데요? 한번 즐겁게 해봅시다 감사합니다 
+                  </PostsubName>
+                </PostNameBox>
+                
+                <PostTagBox>
+                  <PostTag>#뒤죽</PostTag>
+                  <PostTag>#박죽</PostTag>
+                  <PostTag>#별자리</PostTag>
+                  <PostTag>#뒤죽</PostTag>
+                  <PostTag>#박죽</PostTag>
+                  <PostTag>#별자리</PostTag>
+                  <PostTag>#뒤죽</PostTag>
+                  <PostTag>#박죽</PostTag>
+                  <PostTag>#별자리</PostTag>
+                </PostTagBox>
+
+                <PostLine />
+
+                <PostProfileBox>
+                  <PostUserBox>
+                    <PostProfileImg src="/images/main/PostItemImg.png" />
+                    <PostProfileName>
+                      나아키인베
+                    </PostProfileName>
+                  </PostUserBox>
+
+
+                  <PostHeartBox>
+                    <PostHeartImg src="images/main/PostHeart.png"/>
+                    <PostHeartsum>
+                      200
+                    </PostHeartsum>
+                  </PostHeartBox>
+                </PostProfileBox>
+              </PostDetailBox>
             
-            <PostTagBox>
-              <PostTag>#뒤죽</PostTag>
-              <PostTag>#박죽</PostTag>
-              <PostTag>#별자리</PostTag>
-              <PostTag>#뒤죽</PostTag>
-              <PostTag>#박죽</PostTag>
-              <PostTag>#별자리</PostTag>
-              <PostTag>#뒤죽</PostTag>
-              <PostTag>#박죽</PostTag>
-              <PostTag>#별자리</PostTag>
-            </PostTagBox>
-
-             <PostLine />
-
-             <PostProfileBox>
-              <PostUserBox>
-                <PostProfileImg src="/imges/main/PostItemImg" />
-                <PostProfileName>
-                  나아키인베
-                </PostProfileName>
-              </PostUserBox>
-
-
-              <PostHeartBox>
-                <PostHeartImg src="images/main/PostHeart"/>
-                <PostHeartsum>
-                  200
-                </PostHeartsum>
-              </PostHeartBox>
-             </PostProfileBox>
-          </PostDetailBox>
-         
-        </PostBox>
+            </PostBox>
+          </Link>
     );
 }
 
 
 
-const PostBox = styled.div`
+const PostBox = styled.form`
   width:608px;
   height:216px;
-  margin-bottom:100px;
+  margin:30px 30px 80px 30px;
   display:flex;
   justify-content:space-between;
 `
@@ -77,6 +80,7 @@ const PostImgBox = styled.div`
 const PostImg = styled.img`
   width:176px;
   height:176px;
+  border-radius:5px;
 `
 
 const PostDay = styled.span`
@@ -152,7 +156,7 @@ const PostUserBox = styled.div`
 
 const PostProfileImg = styled.img`
   margin-right:8px;
-  border-radius:4px;
+  border-radius:14px;
   width: 28px;
   height: 28px;
 `

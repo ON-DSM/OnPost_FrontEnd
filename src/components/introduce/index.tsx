@@ -24,6 +24,7 @@ function IntroduceDeveloper() {
         </div>
       </DeveloperContainer>
       <ExplainContainer UserInfo={developerInfo[ChooseProfile]} />;
+      
     </IntroduceDeveloperContainer>
   );
 }

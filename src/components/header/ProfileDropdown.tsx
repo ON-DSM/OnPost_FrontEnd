@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
-import Image from "next/image";
+import { Link } from "react-router-dom";
 import { clearStorege } from "../../utils/token";
-import {useState} from 'react';
 
 interface PropsType {
   SetDropDown: (DropDown: boolean) => void;
@@ -13,7 +12,7 @@ function ProfileDropDown({ SetDropDown,setSet}: PropsType) {
     <Background onClick={() => SetDropDown(false)}>
       <DropDownBox onClick={e => e.stopPropagation()}>
         <XImgBox>
-          <Image
+          <img
             onClick={() => SetDropDown(false)}
             width={10}
             height={10}
@@ -26,7 +25,7 @@ function ProfileDropDown({ SetDropDown,setSet}: PropsType) {
             <Email>lokijoji2@gmail.com</Email>
           </div>
           <div>
-            <Image
+            <img
               width={50}
               height={50}
               src='/images/Introduce/JosanghyeonProfile.png'
@@ -36,7 +35,11 @@ function ProfileDropDown({ SetDropDown,setSet}: PropsType) {
         <BtnBox>
           <div>
             <Button onClick={() => setSet(true)}>계정설정</Button>
-            <Button>마이페이지</Button>
+            <Button >
+              <Link to="/ProfilePage">
+                마이페이지
+              </Link>
+            </Button>
           </div>
           <Button onClick={clearStorege}>로그아웃</Button>
         </BtnBox>
@@ -61,6 +64,7 @@ const UserInfoBox = styled.div`
   align-items: center;
   padding-top: 4px;
   padding-bottom: 4px;
+  
 `;
 
 const Name = styled.p`
@@ -94,6 +98,7 @@ const DropDownBox = styled.div`
   background-color: #ffffff;
   padding-right: 18px;
   padding-left: 18px;
+  box-shadow: 0px 0px 4px 2px rgb(0,0,0,25%);
 `;
 
 const Button = styled.button`

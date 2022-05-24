@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import Image from "next/image";
 
 interface PropsType {
   UserName: string;
@@ -18,7 +17,7 @@ function Profile({ UserName, i, SetChooseProfile }: PropsType) {
 
   return (
     <div onClick={() => SetChooseProfile(i)}>
-      <ProfileImg width={100} height={100} src={`/images/Introduce/${Img[i]}.png`} />
+      <ProfileImg src={`/images/Introduce/${Img[i]}.png`} />
       <ProfileName>{UserName}</ProfileName>
     </div>
   );
@@ -29,10 +28,10 @@ const ProfileName = styled.p`
   font-weight: bold;
 `;
 
-const ProfileImg = styled(Image)`
-width:100px;
-height:100px;
-  > span {
+const ProfileImg = styled.img`
+ width:100px;
+ height:100px;
+ > span {
     -webkit-user-drag: none;
   }
   > img {
