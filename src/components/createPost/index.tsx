@@ -14,7 +14,7 @@ function CreatePost() {
     images: '',
     introduce: '',
   });
-  
+
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const textareaInputRef = useRef<HTMLDivElement | null>(null);
   const [value, setValue] = useState<string>('');
@@ -24,7 +24,6 @@ function CreatePost() {
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    setValue(e.target.value);
     handleChange(e);
   };
 
@@ -52,7 +51,7 @@ function CreatePost() {
           onChange={textAreaChange}
         />
         <OperationBar>
-          <span>
+          <span style={{ marginLeft: '30px' }}>
             <img width="12" height="13.71" src="/svg/BackSpaceArrow.svg" />
             뒤로가기
           </span>
@@ -82,6 +81,8 @@ function CreatePost() {
 }
 
 const TempButton = styled.button`
+  z-index: 0;
+  position: relative;
   all: unset;
   color: #666ad1;
   cursor: pointer;
@@ -90,6 +91,8 @@ const TempButton = styled.button`
 `;
 
 const SubmitContent = styled.button`
+  z-index: 0;
+  position: relative;
   all: unset;
   background-color: #666ad1;
   width: 100px;
@@ -103,29 +106,39 @@ const SubmitContent = styled.button`
 `;
 
 const CreatePostBox = styled.div`
+  z-index: 0;
+  position: relative;
   display: flex;
   min-height: 100vh;
 `;
 
 const PreviewText = styled.div`
+  z-index: 0;
+  position: relative;
+  height:100vh;
   width: 50%;
   padding: 70px;
   background-color: #f2f2f8;
   white-space: pre-wrap;
-  display:flex;
-  flex-direction:column;
-  flex-wrap:wrap;
+  display: flex;
+  flex-direction: column;
+  overflow-y:scroll;
   flex: 1 1 0%;
-  overflow-y: auto;
+  overflow-y: scroll;
 `;
 
 const InputText = styled.div`
+  z-index: 0;
+  position: relative;
   width: 50%;
   height: 760px;
   padding: 70px;
+  
 `;
 
 const TitleInput = styled.input`
+  z-index: 0;
+  position: relative;
   all: unset;
   width: 100%;
   min-height: 80px;
@@ -139,16 +152,18 @@ const TitleInput = styled.input`
 `;
 
 const ContentInput = styled.textarea`
+  z-index: 0;
+  position: relative;
   all: unset;
   width: 100%;
-  min-height: 30px;
-  height: auto;
+  min-height: 450px;
   padding-top: 20px;
   resize: none;
 `;
 
 const OperationBar = styled.div`
   position: fixed;
+  z-index: 2;
   bottom: 0;
   left: 0;
   width: 50%;
@@ -158,7 +173,5 @@ const OperationBar = styled.div`
   align-items: center;
   box-shadow: rgb(0 0 0 / 10%) 0px -12px 12px -6px;
 `;
-
-
 
 export default CreatePost;

@@ -39,7 +39,7 @@ export default function ProfileSetting({ setSet }: PropsType) {
   const PageSeleter = () =>{
     switch(Isclick){
       case 1:
-        return <ModalInfo setclick={setclick} />
+        return <ModalInfo />
       case 2:
         return <ModalFollow />
       case 0:

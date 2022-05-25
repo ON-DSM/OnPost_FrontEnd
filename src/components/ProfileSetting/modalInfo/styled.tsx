@@ -7,8 +7,10 @@ export const ProfileImgBox = styled.div`
 `;
 
 export const ProfileImg = styled.img`
-  width: 200px;
-  height: 200px;
+  object-fit: cover;
+    width: 200px;
+    height: 200px;
+    display: block;
 `;
 
 export const ImgUplordBox = styled.div`
