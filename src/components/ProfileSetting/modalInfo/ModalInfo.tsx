@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState, useRef } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import InfoChange from './ModalChange';
 import * as S from './styled';
 

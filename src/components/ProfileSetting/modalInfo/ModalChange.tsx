@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { DataInfoType } from '../../../apis/user/data';
-import Timer from './Timer';
 import * as S from './styled';
 
 export default function InfoChange() {
@@ -63,7 +62,6 @@ export default function InfoChange() {
         {change === 3 ? (
             <>
                 <span>{Text.email}</span>
-                <Timer />
             </>
         ) : (
           <span>{Text.email}</span>
