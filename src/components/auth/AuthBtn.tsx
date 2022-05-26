@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { getToken } from '../../utils/token';
 
 interface PropsType {
   login: boolean;
@@ -9,7 +10,8 @@ interface PropsType {
 function AuthBtn({ login }: PropsType) {
   return (
     <>
-      <LoginButton>{login ? "로그인" : "회원가입"}</LoginButton>
+      {getToken().accessToken && getToken().refreshToken && <div>asdasfaasfs</div>}
+      <LoginButton >{login ? "로그인" : "회원가입"}</LoginButton>
       <SignUpBox>
           {login ? "회원가입하려면 " : "돌아가려면 "}
           <Link to={`/auth/${login ? "Signup" : "Login"}`}>

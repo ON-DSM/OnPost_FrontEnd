@@ -11,6 +11,8 @@ import SearchResult from './pages/SearchResult';
 import Header from './components/header';
 import StyleProvider from './styles';
 import { ToastContainer } from 'react-toastify';
+import axios from 'axios';
+
 
 function App() {
   return (
@@ -24,14 +26,15 @@ function App() {
         <Route path="/auth/Login" element={<LoginPage />} />
         <Route path="/IntroducePage" element={<Intro />} />
         <Route path='/ProfilePage' element={<RelatePage/>}/>
-        <Route path='/PostName/:id' element={<ReadingPost />}/>
+        <Route path='/PostName::id' element={<ReadingPost />}/>
         <Route path='/SearchResult' element={<SearchResult />} />
-        <Route path='/SearchResult/PostName/:id' element={<ReadingPost />}/>
-        <Route path='/ProfilePage/PostName/:id' element={<ReadingPost />}/>
+        <Route path='/SearchResult/PostName::id' element={<ReadingPost />}/>
+        <Route path='/ProfilePage/PostName::id' element={<ReadingPost />}/>
       </Routes>
       <ToastContainer />
     </StyleProvider>
   );
 }
+
 
 export default App;

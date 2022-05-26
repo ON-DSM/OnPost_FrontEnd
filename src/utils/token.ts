@@ -2,6 +2,9 @@ import axios from "axios";
 
 const EXPIRES_TIME = 1000 * 60 * 60 * 24;
 
+axios.defaults.baseURL = "http://13.209.141.103:8080";
+
+
 export function setToken(accessToken: string, refreshToken: string) {
   localStorage.setItem("accessToken", accessToken);
   localStorage.setItem("refreshToken", refreshToken);

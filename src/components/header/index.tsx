@@ -8,6 +8,7 @@ import ProfileSetting from "../ProfileSetting/ProfileSetting";
 import Belling from "./Belling";
 import Search from "./SearchReuslt";
 import {Link} from 'react-router-dom';
+import { getinfo } from "../../apis/user/getinfo";
 
 function Header() {
   const [height, setHeight] = useState<number>(60);
@@ -34,8 +35,8 @@ function Header() {
             <HeaderLogo>온포스트</HeaderLogo>
           </Link>
           <HeaderNavBar>
-            <Link to='/IntroducePage'>개발자 소개</Link>
-            {true ? ( //getToken().accessToken && getToken().refreshToken
+            <Link to='/IntroducePage' onClick={() => getinfo()}>개발자 소개</Link>
+            {getToken().accessToken && getToken().refreshToken ? (
               <>
                 <Link to='/post/CreatePostPage'>글작성하기</Link>
                 <BallImg onClick={() => setbell(!Bell)} src='/svg/alarmIcon.svg' />
@@ -125,10 +126,6 @@ const ProfileImg = styled.img`
   width:2rem;
   height:2rem;
   border-radius:1rem;
-`
-
-const writePost = styled.span`
-  
 `
 
 export default Header;

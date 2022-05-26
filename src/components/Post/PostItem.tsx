@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function PostItem() {
   const Id = 2;
     return (
-        <Link to={`PostName/${Id}`}>
+        <Link to={`PostName:${Id}`}>
             <PostBox>
               <PostImgBox>
                 <PostImg width={170} height={170} src="/images/main/PostItemImg.png"/>
