@@ -1,4 +1,4 @@
-import instance from "../default";
+import instance from '../default';
 
 export interface loginReqeustType {
   email: string;
@@ -6,19 +6,10 @@ export interface loginReqeustType {
 }
 
 export interface loginResponseType {
-  tokenDto: {
-    accessToken: string;
-    refreshToken: string;
-  };
-  memberView: {
-    id: number;
-    name: string;
-    introduce: null;
-    image: null;
-    email: string;
-  };
+  accessToken: string;
+  refreshToken: string;
 }
 
 export const login = async (Text: loginReqeustType) => {
-  return await instance.post<loginResponseType>("/auth/login", Text);
+  return await instance.post<loginResponseType>('/auth/login', Text);
 };
