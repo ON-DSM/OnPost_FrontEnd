@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { DataInfoType } from '../../../apis/user/data';
 import * as S from './styled';
+import { getinfo } from '../../../apis/user/getinfo';
 
 export default function InfoChange() {
   const [change, setchange] = useState<number>(0);
@@ -16,6 +17,7 @@ export default function InfoChange() {
   const ButtonOn = (id: string) => {
     handleChange({ ...Text, [id]: Custom });
     setchange(0);
+    console.log(getinfo())
   };
 
   const ButtonNick = () => {
@@ -36,6 +38,7 @@ export default function InfoChange() {
   const InfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCustom(e.target.value);
   };
+
 
   return (
     <>
