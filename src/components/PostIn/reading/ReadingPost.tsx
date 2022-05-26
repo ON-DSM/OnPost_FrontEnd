@@ -97,18 +97,6 @@ export default function ReadingPost(){
                                     </S.ButtonBox>
                             </form>
                             <Comment />                     
-                            <div>asd</div>
-                            <div>asd</div>
-                            <div>asd</div>
-                            <div>asd</div>
-                            <div>asd</div>
-                            <div>asd</div>
-                            <div>asd</div>
-                            <div>asd</div>
-                            <div>asd</div>
-                            <div>asd</div>
-                            <div>asd</div>
-
                         </S.CenterInfoBox>
                     </S.CenterBox>
                 </S.ProfileContainer>
