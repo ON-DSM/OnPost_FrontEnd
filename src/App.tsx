@@ -11,7 +11,6 @@ import SearchResult from './pages/SearchResult';
 import Header from './components/header';
 import StyleProvider from './styles';
 import { ToastContainer } from 'react-toastify';
-import axios from 'axios';
 
 
 function App() {

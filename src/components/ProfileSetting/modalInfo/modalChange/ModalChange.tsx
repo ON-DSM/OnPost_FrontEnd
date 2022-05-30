@@ -1,23 +1,42 @@
-import React, { useState } from 'react';
-import { DataInfoType } from '../../../apis/user/data';
-import * as S from './styled';
-import { getinfo } from '../../../apis/user/getinfo';
+import React, { useEffect, useState } from 'react';
+import { PasswordType } from '../../../../apis/user/password';
+import * as S from '../styled';
+import { getinfo } from '../../../../apis/user/getinfo';
+import ModalPassword from '../ModalPassword';
+import { DataInfoType } from '../../../../apis/user/data';
 
 export default function InfoChange() {
   const [change, setchange] = useState<number>(0);
   const [Custom, setCustom] = useState<string>('');
-
+  const [Pro, setPro] = useState<PasswordType>({
+    email: '',
+    originPassword: '',
+    newPassword: '',
+  });
   const [Text, handleChange] = useState<DataInfoType>({
     nickname: '김태완',
     intro: '나 자신을 믿고 나아라하 그러한 자에게는 보물이 주어지리다',
     email: 'kkkkteaaa2005@gmail.com',
-    password: 'ktwtraspcx',
+    image: '',
   });
 
-  const ButtonOn = (id: string) => {
+
+  useEffect(() => {
+    async () => {
+      await getinfo().then((data) => {
+        handleChange(data);
+        console.log('1');
+      });
+    };
+  }, [Text]);
+
+  const ButtonOn = async(id: string) => {
     handleChange({ ...Text, [id]: Custom });
     setchange(0);
-    console.log(getinfo())
+    await getinfo().then((data) =>{
+      handleChange(data);
+      console.log(Text)
+    })
   };
 
   const ButtonNick = () => {
@@ -30,15 +49,9 @@ export default function InfoChange() {
     setchange(2);
   };
 
-
-  const ButtonPassword = () => {
-    setCustom(Text.password);
-    setchange(4);
-  };
   const InfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCustom(e.target.value);
   };
-
 
   return (
     <>
@@ -61,22 +74,20 @@ export default function InfoChange() {
         ) : (
           <span>{Text.intro}</span>
         )}
-
         {change === 3 ? (
-            <>
-                <span>{Text.email}</span>
-            </>
+          <>
+            <span>{Text.email}</span>
+          </>
         ) : (
           <span>{Text.email}</span>
         )}
         {change === 4 ? (
-          <S.UserInfoInput
-            name="password"
-            value={change === 4 ? Custom : Text.password}
-            onChange={InfoChange}
-          />
+          <ModalPassword />
         ) : (
-          <span>{Text.password}</span>
+          <>
+            <S.Block />
+            <S.Block />
+          </>
         )}
       </S.ProfileInfo>
       <S.ProfilebuttonBox>
@@ -93,15 +104,14 @@ export default function InfoChange() {
         <S.Profilebutton
           onClick={() => (change === 3 ? setchange(0) : setchange(3))}
         >
-          {change === 3 ? '완료' : '인증'}
+          인증
         </S.Profilebutton>
         <S.Profilebutton
-          onClick={() =>
-            change === 4 ? ButtonOn('password') : ButtonPassword()
-          }
+          onClick={() => (change === 4 ? ButtonOn('password') : setchange(4))}
         >
-          {change === 4 ? '완료' : '변경'}
+          {!false && change === 4 ? '완료' : '변경'}
         </S.Profilebutton>
+        <S.Block />
       </S.ProfilebuttonBox>
     </>
   );

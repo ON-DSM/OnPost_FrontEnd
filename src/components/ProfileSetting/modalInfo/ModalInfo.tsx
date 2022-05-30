@@ -1,12 +1,12 @@
 import React, { ChangeEvent, useState } from 'react';
-import InfoChange from './ModalChange';
+import InfoChange from './modalChange/ModalChange';
 import * as S from './styled';
 
 
 
 export default function ModalInfo() { ///유저정보 추가
   const [imgBase64, setImgBase64] = useState("/images/Modal/Standard.svg");
-  const [imgFile, setImgFile] = useState<null | File>(null);
+  const [, setImgFile] = useState<null | File>(null);
 
   const handleChangeFile = (event: ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
@@ -56,6 +56,7 @@ export default function ModalInfo() { ///유저정보 추가
             비밀번호
             <S.ProfileInfoLine />
           </S.UserInfo>
+          <S.Block />
         </S.ProfileInfoBox>
         <InfoChange />
         <S.ProfileInfoBox></S.ProfileInfoBox>

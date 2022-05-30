@@ -106,7 +106,7 @@ export const ProfilebuttonBox = styled.div`
   flex-direction: column;
   justify-content: space-between;
   font-size: 13px;
-  height: 102%;
+  height: 98%;
   margin-top: -1px;
 `;
 
@@ -234,3 +234,7 @@ export const PublicProfileBallFalse = styled.div`
     }
   }
 `;
+
+export const Block = styled.span`
+  height:19.2px;
+`

@@ -8,19 +8,21 @@ export const getinfo = () => {
     email: '이메일',
   };
 
-  instance
+  
+    const Data =  instance
     .get('/member/info', {
       data: a,
+      proxy:{
+        host: "httml://localhost",
+        port: 3000,
+      },
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
       },
       withCredentials: false,
     })
-    .then((res) => {
-      console.log(res)
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    .then((res) => res.data)
+
+    return Data;
 };
