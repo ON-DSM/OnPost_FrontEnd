@@ -7,6 +7,7 @@ export default function MadalWithdrawal(){
                 온포스트를 탈퇴 하시겠습니까?
             </TitleName>
             <Titleimg src="/images/Modal/ExitOnpost.png" />
+            <span style={{marginTop: '10px',color: "#d4d4d4"}}>버튼 클릭시 바로 삭제됩니다</span>
             <ExitBox>
                 <ExitName>탈퇴 후 모든 개인정보는 삭제됩니다.</ExitName>
                 <ExitButton>탈퇴</ExitButton>
