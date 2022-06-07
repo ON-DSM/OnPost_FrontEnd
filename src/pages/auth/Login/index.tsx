@@ -9,8 +9,10 @@ import PasswordBox from '../../../components/auth/PasswordBox';
 import CheckingBox from '../../../components/auth/CheckingBox';
 import InputBox from '../../../components/auth/InputBox';
 import { customToast } from '../../../utils/toast';
+import { useNavigate } from 'react-router';
 
 function LoginPage() {
+  const Navi = useNavigate()
   const { handleChange, Text } = useForm<loginReqeustType>({
     email: 'lokijoji2@gmail.com',
     password: 'iggso821',
@@ -21,6 +23,7 @@ function LoginPage() {
       const res = await login(Text);
       setToken(res.data.accessToken, res.data.refreshToken);
       customToast('로그인이 완료되었습니다.', 'Success');
+      Navi("/")
     } catch (err) {
       customToast('로그인에 실패하셧습니다.', 'Error');
     }
