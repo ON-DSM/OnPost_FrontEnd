@@ -1,11 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { PasswordType } from '../../../../apis/user/password';
+import React, { ChangeEvent , useState } from 'react';
+import { PasswordType } from '../../../../apis/user/post/password';
 import * as S from '../styled';
-import { getinfo } from '../../../../apis/user/getinfo';
 import ModalPassword from '../ModalPassword';
-import { DataInfoType } from '../../../../apis/user/data';
+import {DataInfoType} from '../../../../recoil/Interface'
 
-export default function InfoChange() {
+
+
+interface PropType{
+  setvalue: (value: DataInfoType) => void;
+  value: DataInfoType,
+}
+
+export default function InfoChange({setvalue,value}:PropType) {
   const [change, setchange] = useState<number>(0);
   const [Custom, setCustom] = useState<string>('');
   const [Pro, setPro] = useState<PasswordType>({
@@ -13,74 +19,70 @@ export default function InfoChange() {
     originPassword: '',
     newPassword: '',
   });
-  const [Text, handleChange] = useState<DataInfoType>({
-    nickname: '김태완',
-    intro: '나 자신을 믿고 나아라하 그러한 자에게는 보물이 주어지리다',
-    email: 'kkkkteaaa2005@gmail.com',
-    image: '',
-  });
 
+  const ButtonOn = (id: string) => {
 
-  useEffect(() => {
-    async () => {
-      await getinfo().then((data) => {
-        handleChange(data);
-        console.log('1');
-      });
-    };
-  }, [Text]);
-
-  const ButtonOn = async(id: string) => {
-    handleChange({ ...Text, [id]: Custom });
     setchange(0);
-    await getinfo().then((data) =>{
-      handleChange(data);
-      console.log(Text)
-    })
+    setvalue({ ...value, [id]: Custom });
+    console.log(value[id as keyof DataInfoType])
   };
 
   const ButtonNick = () => {
-    setCustom(Text.nickname);
     setchange(1);
+    setCustom(value.name);
   };
 
   const ButtonIntro = () => {
-    setCustom(Text.intro);
     setchange(2);
+    setCustom(value.introduce);
   };
 
-  const InfoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCustom(e.target.value);
-  };
+  const InfoChange = (e:ChangeEvent<HTMLInputElement>) =>{
+    setCustom(e.target.value)
+  }
+
+  const changed = [
+    ButtonNick,
+    ButtonIntro,
+    () => setchange(3),
+    () => setchange(4),
+  ];
+
+  const unchanged = [
+    () => ButtonOn('name'),
+    () => ButtonOn('introduce'),
+    () => setchange(0),
+    () => ButtonOn('password'),
+  ];
 
   return (
     <>
       <S.ProfileInfo>
         {change === 1 ? (
           <S.UserInfoInput
-            name="nickname"
-            value={change === 1 ? Custom : Text.nickname}
-            onChange={InfoChange}
+            name="name"
+            value={change === 1 ? Custom : value.name}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setCustom(e.target.value)
+            }
           />
         ) : (
-          <span>{Text.nickname}</span>
+          <S.Text>{value.name}</S.Text>
         )}
         {change === 2 ? (
           <S.UserInfoInput
-            name="intro"
-            value={change === 2 ? Custom : Text.intro}
+            name="introduce"
+            value={change === 2 ? Custom : value.introduce}
             onChange={InfoChange}
           />
         ) : (
-          <span>{Text.intro}</span>
+          <S.Text>
+            {value.introduce === null ? '소개해 주세요!' : value.introduce}
+          </S.Text>
         )}
-        {change === 3 ? (
-          <>
-            <span>{Text.email}</span>
-          </>
-        ) : (
-          <span>{Text.email}</span>
-        )}
+        <S.Text >
+          {value.email}
+        </S.Text>
         {change === 4 ? (
           <ModalPassword />
         ) : (
@@ -91,26 +93,17 @@ export default function InfoChange() {
         )}
       </S.ProfileInfo>
       <S.ProfilebuttonBox>
-        <S.Profilebutton
-          onClick={() => (change === 1 ? ButtonOn('nickname') : ButtonNick())}
-        >
-          {change === 1 ? '완료' : '변경'}
-        </S.Profilebutton>
-        <S.Profilebutton
-          onClick={() => (change === 2 ? ButtonOn('intro') : ButtonIntro())}
-        >
-          {change === 2 ? '완료' : '변경'}
-        </S.Profilebutton>
-        <S.Profilebutton
-          onClick={() => (change === 3 ? setchange(0) : setchange(3))}
-        >
-          인증
-        </S.Profilebutton>
-        <S.Profilebutton
-          onClick={() => (change === 4 ? ButtonOn('password') : setchange(4))}
-        >
-          {!false && change === 4 ? '완료' : '변경'}
-        </S.Profilebutton>
+        {Array.from(Array(4).keys()).map((num) => (
+          <>
+            <S.Profilebutton
+              onClick={() => {
+                num + 1 == change ? unchanged[num]() : changed[num]();
+              }}
+            >
+              {num == 2 ? "인증" : change === num + 1 ? '완료' : '변경'}
+            </S.Profilebutton>
+          </>
+        ))}
         <S.Block />
       </S.ProfilebuttonBox>
     </>
