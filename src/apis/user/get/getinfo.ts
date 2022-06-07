@@ -1,6 +1,7 @@
-import instance from '../default';
+import instance from '../../default';
 
-export const getinfo = () => {
+
+export const getinfo = async () => {
   const a = {
     sername: '이름',
     introduce: '한줄소개',
@@ -8,14 +9,9 @@ export const getinfo = () => {
     email: '이메일',
   };
 
-  
-    const Data =  instance
+  const Data = await instance
     .get('/member/info', {
       data: a,
-      proxy:{
-        host: "httml://localhost",
-        port: 3000,
-      },
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
@@ -23,6 +19,5 @@ export const getinfo = () => {
       withCredentials: false,
     })
     .then((res) => res.data)
-
-    return Data;
+  return Data;
 };
