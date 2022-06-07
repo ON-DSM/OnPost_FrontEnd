@@ -1,41 +1,36 @@
-import React, { ChangeEvent, useState } from 'react';
+import { useEffect, useState } from 'react';
 import InfoChange from './modalChange/ModalChange';
 import * as S from './styled';
+import {useRecoilState} from 'recoil';
+import { ProfileState} from '../../../recoil/proflie';
+import ModalImg from './modalChange/ModalImg';
+import DataInfo from '../../../apis/user/post/data'
+import { DataInfoType } from '../../../recoil/Interface';
+import { getinfo } from '../../../apis/user/get/getinfo';
 
 
 
 export default function ModalInfo() { ///유저정보 추가
-  const [imgBase64, setImgBase64] = useState("/images/Modal/Standard.svg");
-  const [, setImgFile] = useState<null | File>(null);
+  const [data,setdata] = useRecoilState(ProfileState)
+  const [value, setvalue] = useState<DataInfoType>(data);
+  
+  window.addEventListener('beforeunload', (event) => {
+    event.preventDefault();
+    event.returnValue = 'asd';
+  });
 
-  const handleChangeFile = (event: ChangeEvent<HTMLInputElement>) => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64 = reader.result;
-      if (base64) setImgBase64(base64.toString());
-    };
-    if (event.target.files !== null) {
-      reader.readAsDataURL(event.target.files[0]);
-      setImgFile(event.target.files[0]);
+  useEffect(() =>{
+    return () =>{
+      if((Object.entries(data).toString() !== Object.entries(value).toString())){
+        DataInfo(value);
+      }
     }
-  };
+  })
 
- 
   return (
     <>
-      <S.ProfileImgBox>
-        <S.ProfileImg src={imgBase64} />
-        <S.ImgUplordBox>
-          <input
-            id="image-input"
-            accept=".gif, .jpg, .png, .svg"
-            type="file"
-            style={{ display: 'none' }}
-            onChange={handleChangeFile}
-          />
-          <S.ImgRemove onClick={() =>setImgBase64("/images/Modal/Standard.svg")}>이미지 삭제</S.ImgRemove>
-          <S.ImgUplord htmlFor="image-input">이미지 업로드</S.ImgUplord>
-        </S.ImgUplordBox>
+      <S.ProfileImgBox >
+        <ModalImg setvalue={setvalue} value={value}/>
       </S.ProfileImgBox>
       <S.SizeName>사이즈: 200 x 200픽셀</S.SizeName>
       <S.UserInfoBox>
@@ -58,7 +53,7 @@ export default function ModalInfo() { ///유저정보 추가
           </S.UserInfo>
           <S.Block />
         </S.ProfileInfoBox>
-        <InfoChange />
+        <InfoChange setvalue={setvalue} value={value}/>
         <S.ProfileInfoBox></S.ProfileInfoBox>
       </S.UserInfoBox>
     </>
