@@ -1,7 +1,8 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent } from 'react';
 
 function useForm<T>(value: T) {
   const [Text, SetText] = useState(value);
+  
   const handleChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => {
@@ -14,6 +15,7 @@ function useForm<T>(value: T) {
   return {
     handleChange,
     Text,
+    SetText,
   };
 }
 
