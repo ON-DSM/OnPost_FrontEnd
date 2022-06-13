@@ -8,13 +8,12 @@ export const getinfo = async () => {
     image: '이미지 경로',
     email: '이메일',
   };
-
   const Data = await instance
     .get('/member/info', {
       data: a,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+        'Authorization': `Bearer ${sessionStorage.getItem('accessToken')}`,
       },
       withCredentials: false,
     })
