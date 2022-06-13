@@ -22,8 +22,6 @@ export default function ReadingPost(){
         }
       }, [value]);
     return(
-        <>  
-        <script src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
             <S.MainContainer>
                 <S.MainCenter>
                     <S.PostName>제목이름입니당</S.PostName>
@@ -75,8 +73,8 @@ export default function ReadingPost(){
                     </S.PostButtonBar>
                 </S.MainCenter>
                 <S.ProfileContainer>
-                    <S.CenterBox>
-                        <S.CenterInfoBox>
+                    <S.CenterBox >
+                        <S.CenterInfoBox >
                             <S.ProfileBox>
                                 <S.ProfileImg src="/images/PostIn/ProfileImg.png"/>
                                 <S.ProfileInfo>
@@ -101,10 +99,6 @@ export default function ReadingPost(){
                     </S.CenterBox>
                 </S.ProfileContainer>
             </S.MainContainer>
-            <S.TrendBar>
-                <TrendPost />
-            </S.TrendBar>
-        </>
     );   
 }
 

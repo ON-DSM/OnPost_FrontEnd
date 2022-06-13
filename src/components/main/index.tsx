@@ -46,7 +46,7 @@ function Main() {
 }
 
 const MainImg = styled.img`
-  width: 100%;
+  width: 1536px;
 `;
 
 const PostContainer = styled.div`

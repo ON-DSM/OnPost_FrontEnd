@@ -8,7 +8,8 @@ export const MainContainer = styled.div`
 
 export const MainCenter = styled.div`
   padding-top: 50px;
-  width: 1000px;
+  max-width: 1000px;
+  width:100%;
   margin: 0 auto;
 `;
 export const PostName = styled.div`
@@ -25,7 +26,8 @@ export const PostTime = styled.a`
 export const PostTagBox = styled.div`
   display: flex;
   flex-wrap: wrap;
-  width: 800px;
+  max-width: 800px;
+  width:100%;
   margin-top: 20px;
 `;
 
@@ -44,7 +46,8 @@ export const PostTag = styled.div`
 `;
 
 export const PostImg = styled.img`
-  width: 800px;
+  max-width: 800px;
+  width:100%;
   margin-top: 10px;
 `;
 
@@ -56,7 +59,8 @@ export const PostInfo = styled.div`
 
 export const PostButtonBar = styled.div`
   display: flex;
-  width: 800px;
+  max-width: 800px;
+  width:100%;
   justify-content: space-between;
   padding-bottom: 10px;
 `;
@@ -97,12 +101,14 @@ export const ProfileContainer = styled.div`
 `;
 
 export const CenterBox = styled.div`
-  width: 1000px;
+  max-width: 1000px;
+  width:100%;
   margin: auto;
 `;
 
 export const CenterInfoBox = styled.div`
-  width: 800px;
+  max-width: 800px;
+  width:100%;
   display: flex;
   flex-direction: column;
 `;
