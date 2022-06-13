@@ -1,21 +1,26 @@
-import instance from "../default";
-
-export interface PostRequestType {
-  title: string;
-  context: string;
-  id: string;
-  images: string;
-  introduce: string;
-}
+import instance from '../default';
+import { PostRequestType } from '../Interface';
 
 const CreatePost = (PostRequest: PostRequestType) => {
-  const formData = new FormData();
-  formData.append("title", PostRequest.title);
-  formData.append("context", PostRequest.context);
-  formData.append("id", PostRequest.id);
-  formData.append("images", PostRequest.images);
-  formData.append("introduce", PostRequest.introduce);
-  return instance.post("/post/create", formData);
+  try {
+    const array = ['title', 'context', 'profile', 'introduce', 'tags', 'email'];
+    const formData = new FormData();
+    array.map((key) => {
+      if (PostRequest[key as keyof PostRequestType] !== '') {
+        formData.set(key, PostRequest[key as keyof PostRequestType] as Blob);
+      } else if (key === 'profile') {
+        typeof PostRequest.profile !== 'string' &&
+          formData.set(key, PostRequest.profile as Blob);
+      }
+    });
+    instance.post('/post/create', formData, {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
+      },
+    });
+  } catch (e) {
+    throw e;
+  }
 };
 
 export default CreatePost;
