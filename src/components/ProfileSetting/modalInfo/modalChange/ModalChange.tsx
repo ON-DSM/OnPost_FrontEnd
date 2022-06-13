@@ -1,9 +1,10 @@
 import React, { ChangeEvent , useState } from 'react';
-import { PasswordType } from '../../../../apis/user/post/password';
+import { PasswordType } from '../../../../apis/Interface';
 import * as S from '../styled';
-import ModalPassword from '../ModalPassword';
-import {DataInfoType} from '../../../../recoil/Interface'
-
+import ModalPassword from './ModalPassword';
+import {DataInfoType} from '../../../../apis/Interface'
+import { RePassword } from '../../../../apis/user/post/password';
+import { customToast } from '../../../../utils/toast';
 
 
 interface PropType{
@@ -11,20 +12,35 @@ interface PropType{
   value: DataInfoType,
 }
 
+
+
+const clearpass = {
+    password: '',
+    oldpass:'',
+  }
+
 export default function InfoChange({setvalue,value}:PropType) {
   const [change, setchange] = useState<number>(0);
   const [Custom, setCustom] = useState<string>('');
-  const [Pro, setPro] = useState<PasswordType>({
-    email: '',
-    originPassword: '',
-    newPassword: '',
-  });
+  
+  const [pass,setpass] = useState<PasswordType>({...clearpass})
 
   const ButtonOn = (id: string) => {
-
     setchange(0);
-    setvalue({ ...value, [id]: Custom });
-    console.log(value[id as keyof DataInfoType])
+    if(Custom !== value[id as keyof DataInfoType] && Custom !== ''){    if(id === 'name' ){
+    setvalue({ ...value, [id]: Custom.slice(0,10)});
+    } else if(id === 'introduce'){
+      setvalue({ ...value, [id]: Custom.slice(0,60) });
+    }
+  }else if(id === 'password' && pass.oldpass !== '' && pass.password !== ''){
+    if(pass.password !== pass.oldpass){
+        RePassword(pass)
+        customToast("새 비밀번호는 8자 이상, 20자 이하이여야 합니다.","Error")
+      }else {
+        
+      }
+      setpass({...clearpass})
+    }
   };
 
   const ButtonNick = () => {
@@ -36,6 +52,7 @@ export default function InfoChange({setvalue,value}:PropType) {
     setchange(2);
     setCustom(value.introduce);
   };
+
 
   const InfoChange = (e:ChangeEvent<HTMLInputElement>) =>{
     setCustom(e.target.value)
@@ -84,7 +101,7 @@ export default function InfoChange({setvalue,value}:PropType) {
           {value.email}
         </S.Text>
         {change === 4 ? (
-          <ModalPassword />
+          <ModalPassword setpass={setpass} pass={pass} />
         ) : (
           <>
             <S.Block />
