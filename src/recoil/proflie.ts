@@ -1,6 +1,5 @@
-import { atom, selector } from 'recoil';
-import { getinfo } from '../apis/user/get/getinfo';
-import * as I from './Interface';
+import { atom } from 'recoil';
+import * as I from '../apis/Interface';
 
 export const ProfileState = atom<I.DataInfoType>({
   key: 'ProfileState',
@@ -12,3 +11,20 @@ export const ProfileState = atom<I.DataInfoType>({
     con: false,
   },
 });
+
+export const TokenClock = atom<boolean>({
+  key:"TokenKey",
+  default: false,
+});
+
+export const WritePost = atom<I.PostRequestType>({
+  key:'UserPost',
+  default:{
+    title: '',
+    email:'',
+    profile: '',
+    introduce: '',
+    context: '',
+    tags: '',
+  }
+})
