@@ -5,25 +5,17 @@ import {useRecoilState} from 'recoil';
 import { ProfileState} from '../../../recoil/proflie';
 import ModalImg from './modalChange/ModalImg';
 import DataInfo from '../../../apis/user/post/data'
-import { DataInfoType } from '../../../recoil/Interface';
-import { getinfo } from '../../../apis/user/get/getinfo';
+import { DataInfoType } from '../../../apis/Interface';
 
 
 
 export default function ModalInfo() { ///유저정보 추가
   const [data,setdata] = useRecoilState(ProfileState)
   const [value, setvalue] = useState<DataInfoType>(data);
-  
-  window.addEventListener('beforeunload', (event) => {
-    event.preventDefault();
-    event.returnValue = 'asd';
-  });
 
   useEffect(() =>{
-    return () =>{
-      if((Object.entries(data).toString() !== Object.entries(value).toString())){
-        DataInfo(value);
-      }
+    if((Object.entries(data).toString() !== Object.entries(value).toString())){
+      DataInfo(value).then(Data => setdata(Data!));
     }
   })
 
