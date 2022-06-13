@@ -36,11 +36,13 @@ export default function ProfileSetting({ setSet }: PropsType) {
 
   
 
+  
   const PageSeleter = () =>{
     switch(Isclick){
       case 1:
         return <ModalInfo />
       case 2:
+        
         return <ModalFollow />
       case 0:
         return <ModalWithdrawal />
@@ -86,10 +88,6 @@ const Backspace = styled.img`
   margin-top:-72%;
 `
 
-const ModalContainer = styled.div`
-  z-index: 9999;
-`;
-
 const DialogBox = styled.dialog`
   width: 800px;
   height: 640px;
@@ -105,7 +103,7 @@ const DialogBox = styled.dialog`
   box-shadow: 0 0 30px rgba(30, 30, 30, 0.185);
   box-sizing: border-box;
   background-color: white;
-  z-index: 10000;
+  z-index: 5000;
   box-shadow: 2px 8px 4px rgb(0,0,0,25%);
 `;
 
@@ -115,7 +113,7 @@ const Backdrop = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 9999;
+  z-index: 4999;
   background-color: rgba(0, 0, 0, 0.2);
 `;
 

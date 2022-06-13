@@ -72,7 +72,7 @@ export const ProfileInfo = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  font-size: 13px; ;
+  font-size: 14px; ;
 `;
 
 export const ProfileInfoLine = styled.span`
@@ -106,12 +106,12 @@ export const ProfilebuttonBox = styled.div`
   flex-direction: column;
   justify-content: space-between;
   font-size: 13px;
-  height: 98%;
-  margin-top: -1px;
+  height: 100%;
 `;
 
 export const UserInfoInput = styled.input`
-  font-size: 13px;
+  height:25px;
+  font-size: 14px;
   border-radius: 3px;
   border: 1px solid #666ad1;
   padding-left: 5px;
@@ -122,6 +122,7 @@ export const UserInfo = styled.div`
   flex-direction: row;
   align-items: center;
   width: 150px;
+  height: 25px;
 `;
 
 export const PublicProfile = styled.div`
@@ -236,5 +237,9 @@ export const PublicProfileBallFalse = styled.div`
 `;
 
 export const Block = styled.span`
-  height:19.2px;
+  height:25px;
+`
+
+export const Text = styled.span`
+  height:25px;
 `

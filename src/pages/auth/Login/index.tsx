@@ -22,10 +22,10 @@ function LoginPage() {
     try {
       const res = await login(Text);
       setToken(res.data.accessToken, res.data.refreshToken);
-      customToast('로그인이 완료되었습니다.', 'Success');
       Navi("/")
+      window.location.reload()
     } catch (err) {
-      customToast('로그인에 실패하셧습니다.', 'Error');
+      customToast('로그인에 실패하겼습니다.', 'Error');
     }
   };
 
