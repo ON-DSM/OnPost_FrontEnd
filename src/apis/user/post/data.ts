@@ -1,17 +1,10 @@
+import { DataInfoType } from '../../Interface';
 import instance from '../../default';
 
-interface DataInfoType {
-  name: string;
-  introduce: string;
-  email: string;
-  profile: File | null | string;
-  con: boolean;
-}
 
 const DataInfo = async (DataInfo: DataInfoType) => {
   try {
     const formData = new FormData();
-    console.log(DataInfo);
     ['name','introduce','profile','email'].map(n => {
       if(DataInfo[n as keyof DataInfoType] !== ''){
         if(n !== 'profile'){
@@ -22,14 +15,14 @@ const DataInfo = async (DataInfo: DataInfoType) => {
       }
     });
     
-    return await instance.put<DataInfoType>('/member/edit', formData, {
+    return await instance.put<DataInfoType | null>('/member/edit', formData, {
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+        'Authorization': `Bearer ${sessionStorage.getItem('accessToken')}`,
         'Content-Type': 'multipart/form-data'
       },
-    }).then(data => {console.log(data);return data});
+    }).then(data => data.data);
   } catch (e) {
-    console.log(e)
+    throw e;
   }
 };
 
