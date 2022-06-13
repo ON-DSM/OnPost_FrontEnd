@@ -1,13 +1,15 @@
-import styled from '@emotion/styled';
+import * as S from './styled';
 import React, { useState } from 'react';
+import { PostRequestType, TagType } from '../../apis/Interface';
 
-interface TagType {
-  value: string;
+interface PropType {
+  SetText: (Text: PostRequestType) => void;
+  Text: PostRequestType;
 }
 
-export default function ReturnTag() {
+export default function ReturnTag({ SetText, Text }: PropType) {
   const [Tags, setTag] = useState('');
-  const [TagState, setTagState] = useState<TagType[]>([]);
+  const ShowTag = Text.tags.split(',');
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTag(e.target.value);
@@ -19,51 +21,28 @@ export default function ReturnTag() {
       Tags !== '' &&
       event.nativeEvent.isComposing === false
     ) {
-      const Child = {
-        value: Tags,
-      };
-      setTagState([...TagState, Child]);
+      SetText({ ...Text, tags: Text.tags !== '' ? Text.tags +  ',' + Tags : Text.tags + Tags});
       setTag('');
     }
     if (event.code === 'Backspace' && Tags.length === 0) {
-      setTagState(TagState.filter((Tag,index) => index < TagState.length - 1))
+      ShowTag.pop();
+      SetText({ ...Text, tags: ShowTag.join(",") });
     }
   };
   return (
     <>
-      <TagLineBox>
-        {TagState.map((item) => (
-          <Tag>{item.value}</Tag>
+      <S.TagLineBox>
+        {ShowTag.map((item) => (
+          item !== '' && <S.Tag>{item}</S.Tag>
         ))}
-        <TagBox
+        <S.TagBox
           type="text"
           value={Tags}
           onChange={onChange}
           onKeyDown={AddTag}
           placeholder="태그를 입력해 주세요"
         />
-      </TagLineBox>
+      </S.TagLineBox>
     </>
   );
 }
-
-const TagLineBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
-  width: 100%;
-`;
-
-const TagBox = styled.input`
-  all: unset;
-  width: 300px;
-`;
-
-const Tag = styled.span`
-  padding: 5px 10px 5px 10px;
-  background-color: #666ad1;
-  margin: 5px;
-  border-radius: 50px;
-  color: white;
-`;
