@@ -6,17 +6,23 @@ axios.defaults.baseURL = "http://13.209.141.103:8080";
 
 
 export function setToken(accessToken: string, refreshToken: string) {
-  localStorage.setItem("accessToken", accessToken);
-  localStorage.setItem("refreshToken", refreshToken);
+  sessionStorage.setItem("accessToken", accessToken);
+  sessionStorage.setItem("refreshToken", refreshToken);
   axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 }
 
-export const clearStorege = () => localStorage.clear();
+export const clearStorege = () => sessionStorage.clear();
 
 export const getToken = () => {
   const accessToken =
-    typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+    typeof window !== "undefined" ? sessionStorage.getItem("accessToken") : null;
   const refreshToken =
-    typeof window !== "undefined" ? localStorage.getItem("refreshToken") : null;
+    typeof window !== "undefined" ? sessionStorage.getItem("refreshToken") : null;
   return { accessToken, refreshToken };
 };
+
+
+
+ 
+//Request interceptor for API calls
+
