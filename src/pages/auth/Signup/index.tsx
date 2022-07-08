@@ -7,8 +7,10 @@ import { signupRequestType } from "../../../apis/auth/signup";
 import { FormEvent } from "react";
 import { signup } from "../../../apis/auth/signup";
 import { customToast } from "../../../utils/toast";
+import { useNavigate } from "react-router";
 
 function SignupPage() {
+  const Navi = useNavigate();
   const { handleChange, Text } = useForm<signupRequestType>({
     email: "lokijoji2@gmail.com",
     password: "iggso821",
@@ -19,6 +21,7 @@ function SignupPage() {
     e.preventDefault();
     try {
       await signup(Text);
+      Navi('/auth/Login')
       customToast("회원가입이 완료되었습니다.", "Success");
     } catch (err) {
       customToast("회원가입이 실패하였습니다.", "Error");
