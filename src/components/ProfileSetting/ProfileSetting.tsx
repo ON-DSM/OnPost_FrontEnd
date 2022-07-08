@@ -1,24 +1,14 @@
 import styled from '@emotion/styled';
 import ModalInfo from './modalInfo/ModalInfo';
-import ModalFollow from './ModalFollow';
-import ModalWithdrawal from './MadalWithdrawal';
-import React, { useEffect,useState } from 'react';
+import React, { useEffect } from 'react';
 
 interface PropsType {
   setSet: (Set: boolean) => void;
 }
 
 export default function ProfileSetting({ setSet }: PropsType) {
-  const [Isclick, setclick] = useState<number>(1);
   const Setting = () => {
     setSet(!Set);
-  };
-
-  const ClickColor1 = () => {
-    return Isclick === 1 ? '#C9C9C9' : 'white';
-  };
-  const ClickColor2 = () => {
-    return Isclick === 2 ? '#C9C9C9' : 'white';
   };
 
   useEffect(() => {
@@ -37,43 +27,18 @@ export default function ProfileSetting({ setSet }: PropsType) {
   
 
   
-  const PageSeleter = () =>{
-    switch(Isclick){
-      case 1:
-        return <ModalInfo />
-      case 2:
-        
-        return <ModalFollow />
-      case 0:
-        return <ModalWithdrawal />
-    }
-  }
   return (
     <>
       <DialogBox>
         <Backspace onClick={Setting} src='/images/Modal/ModalBack.png'/>
-        <TapBar>
-          <div>
-            <TapButton onClick={() => setclick(1)} color={ClickColor1()}>
-              <TapbuttonName>계정 정보</TapbuttonName>
-            </TapButton>
-            <TapButton2 onClick={() => setclick(2)} color={ClickColor2()}>
-              <TapbuttonName>유저 팔로우</TapbuttonName>
-            </TapButton2>
-          </div>
-          <Withdrawal onClick={() => setclick(0)}>계정 삭제</Withdrawal>
-        </TapBar>
         <Information>
-          {
-            PageSeleter()
-          }
+          <ModalInfo />
         </Information>
       </DialogBox>
         <Backdrop
           onClick={(e: React.MouseEvent) => {
             e.preventDefault();
             if (Setting) {
-              
               Setting();
             }
           }}
@@ -85,12 +50,12 @@ export default function ProfileSetting({ setSet }: PropsType) {
 const Backspace = styled.img`
   position:absolute;
   margin-left:95%;
-  margin-top:-72%;
+  margin-top:-100%;
 `
 
 const DialogBox = styled.dialog`
-  width: 800px;
-  height: 640px;
+  width: 600px;
+  height: 650px;
   top: 50%;
   left: 50%;
   position: fixed;
@@ -134,11 +99,7 @@ const TapButton = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 15px;
-  background-color: ${(Props) => Props.color && Props.color};
   border-radius: 5px;
-  :hover {
-    background-color: #e4e4e4;
-  }
 `;
 
 const TapButton2 = styled.div`
@@ -151,7 +112,7 @@ const TapButton2 = styled.div`
   background-color: ${(Props) => Props.color && Props.color};
   border-radius: 5px;
   :hover {
-    background-color: #e4e4e4;
+    background-color: ${(Props) => Props.color === 'white' && '#e4e4e4'} ;
   }
 `;
 
@@ -168,6 +129,8 @@ const Withdrawal = styled.span`
 const Information = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content:space-evenly;
   margin-left: 25px;
   width: 100%;
+  height:100%
 `;
