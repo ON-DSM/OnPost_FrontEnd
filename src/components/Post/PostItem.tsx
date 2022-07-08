@@ -1,182 +1,177 @@
-import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
+import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
+import { PostList } from '../../apis/Interface';
 
-export default function PostItem() {
-  const Id = 2;
-    return (
-        <Link to={`PostName:${Id}`}>
-            <PostBox>
-              <PostImgBox>
-                <PostImg width={170} height={170} src="/images/main/PostItemImg.png"/>
-                <PostDay>2022-2-24</PostDay>
-              </PostImgBox>
-
-              <PostDetailBox>
-                <PostNameBox>
-                  <PostName>
-                  별똥별과 비슷한 인공위성 잔해묾ㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㅇㄴ
-                  </PostName>
-                  <PostsubName>
-                  인공위성이 수명을 다하여 떨어질 때 별똥별과 비슷한 형상을 띈다고 한다 
-                  오늘 한 번 알아보자 안녕하십니까 저는 테스트를 하기위해 찾아온 김선생
-                  이라고 합니다 잘 부탁드립니다 오늘은 제가 재미있는 테스트를 하나 해보려 
-                  하는 데요? 한번 즐겁게 해봅시다 감사합니다 
-                  </PostsubName>
-                </PostNameBox>
-                
-                <PostTagBox>
-                  <PostTag>#뒤죽</PostTag>
-                  <PostTag>#박죽</PostTag>
-                  <PostTag>#별자리</PostTag>
-                  <PostTag>#뒤죽</PostTag>
-                  <PostTag>#박죽</PostTag>
-                  <PostTag>#별자리</PostTag>
-                  <PostTag>#뒤죽</PostTag>
-                  <PostTag>#박죽</PostTag>
-                  <PostTag>#별자리</PostTag>
-                </PostTagBox>
-
-                <PostLine />
-
-                <PostProfileBox>
-                  <PostUserBox>
-                    <PostProfileImg src="/images/main/PostItemImg.png" />
-                    <PostProfileName>
-                      나아키인베
-                    </PostProfileName>
-                  </PostUserBox>
-
-
-                  <PostHeartBox>
-                    <PostHeartImg src="images/main/PostHeart.png"/>
-                    <PostHeartsum>
-                      200
-                    </PostHeartsum>
-                  </PostHeartBox>
-                </PostProfileBox>
-              </PostDetailBox>
-            
-            </PostBox>
-          </Link>
-    );
+interface PT {
+  Obj: PostList;
 }
 
+export default function PostItem({ Obj }: PT) {
+  return (
+    <>
+      <PostBox  to={`PostName/${Obj.id}`}>
+        <PostImgBox>
+          <PostImg  width={170} height={170} src={Obj.profileImage} />
+          <PostDay>{Obj.createAt}</PostDay>
+        </PostImgBox>
 
+        <PostDetailBox>
+          <PostNameBox>
+            <PostName>{Obj.title}</PostName>
+            <PostsubName>{Obj.introduce}</PostsubName>
+          </PostNameBox>
 
-const PostBox = styled.form`
-  width:608px;
-  height:216px;
-  margin:30px 30px 80px 30px;
-  display:flex;
-  justify-content:space-between;
-`
+          <PostTagBox>
+            {Obj.tags ? (
+              Obj.tags
+                .split(',')
+                .map((e, index) => <PostTag key={index}>{e}</PostTag>)
+            ) : (
+              <span style={{ display: 'block', height: '23.2px' }} />
+            )}
+          </PostTagBox>
+
+          <PostLine />
+
+          <PostProfileBox>
+            <PostUserBox>
+              <PostProfileImg src={Obj.writer.profile} />
+              <PostProfileName>{Obj.writer.name}</PostProfileName>
+            </PostUserBox>
+
+            <PostHeartBox>
+              <PostHeartImg src="images/main/PostHeart.png" />
+              <PostHeartsum>{Obj.like}</PostHeartsum>
+            </PostHeartBox>
+          </PostProfileBox>
+        </PostDetailBox>
+      </PostBox>
+    </>
+  );
+}
+
+const PostBox = styled(Link)`
+  width: 608px;
+  height: 216px;
+  margin: 30px 30px 80px 30px;
+  display: flex;
+  justify-content: space-between;
+  text-decoration: none;
+`;
 
 const PostImgBox = styled.div`
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const PostImg = styled.img`
-  width:176px;
-  height:176px;
-  border-radius:5px;
-`
+  width: 176px;
+  height: 176px;
+  border-radius: 5px;
+`;
 
 const PostDay = styled.span`
-  font-size:16px;
+  font-size: 16px;
   color: #888888;
-  margin-top:8px;
-`
+  margin-top: 8px;
+`;
 
 const PostDetailBox = styled.div`
-  width:400px;
+  width: 400px;
   border-radius: 5px;
-  border: 1px solid #BABABA;
-`
+  border: 1px solid #bababa;
+`;
 
 const PostNameBox = styled.div`
-  margin-left:24px;
-  margin-top:16px;
-  display:flex;
-  flex-direction:column;
-  height:128px;
-`
+  margin-left: 24px;
+  margin-top: -5.6px;
+  padding-top:16px;
+  display: flex;
+  flex-direction: column;
+  height: 128px;
+`;
 
 const PostName = styled.span`
-  font-size:18px;
-  font-weight:bold;
-  text-overflow:ellipsis;
-  overflow:hidden;
-  white-space:nowrap;
-  margin-bottom:8px;
-`
+  font-size: 18px;
+  color: black;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-bottom: 8px;
+`;
 
 const PostsubName = styled.span`
-  font-size:14px;
+  font-size: 14px;
   color: #777777;
   overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical; 
-`
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+`;
 
 const PostTagBox = styled.div`
-  margin-left:24px;
-  text-overflow:ellipsis;
-  overflow:hidden;
-  white-space:nowrap;
+  margin-left: 24px;
+  height: 43.2px;
+  text-overflow: ellipsis;
+   overflow: hidden;
+   word-break: break-word;
+    display:flex;
+    flex-wrap: wrap;
 `
 
 const PostTag = styled.span`
-  font-size:14px;
-  color: #666AD1;
-  margin-right:1rem;
-`
+  font-size: 14px;
+  color: #666ad1;
+  margin-right: 1rem;
+`;
 
 const PostLine = styled.div`
-  width:384px;
-  margin-left:8px;
-  margin-top:6px;
-  border-bottom: 1px solid #BABABA;
-`
+  width: 384px;
+  margin-left: 8px;
+  margin-top: 6px;
+  border-bottom: 1px solid #bababa;
+`;
 
 const PostProfileBox = styled.div`
-  display:flex;
-  flex-direction:row;
-  justify-content:space-between;
-  margin-left:24px;
-  width:352px;
-`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-left: 24px;
+  width: 352px;
+`;
 const PostUserBox = styled.div`
-  height:40px;
-  display:flex;
-  align-items:center;
-`
+  height: 40px;
+  display: flex;
+  align-items: center;
+`;
 
 const PostProfileImg = styled.img`
-  margin-right:8px;
-  border-radius:14px;
+  margin-right: 8px;
+  border-radius: 14px;
   width: 28px;
   height: 28px;
-`
+`;
 
 const PostProfileName = styled.span`
-  font-size:14px;
-`
+  font-size: 14px;
+  color: #777777;
+`;
 
 const PostHeartBox = styled.div`
-  height:40px;
-  display:flex;
+  height: 40px;
+  display: flex;
   align-items: center;
-`
+`;
 
 const PostHeartsum = styled.span`
-  font-size:14px;
-`
+  font-size: 14px;
+  color: black;
+`;
 
 const PostHeartImg = styled.img`
-  margin-right:8px;
-  width:16px;
-  height:16px;
-`
+  margin-right: 8px;
+  width: 16px;
+  height: 16px;
+`;
