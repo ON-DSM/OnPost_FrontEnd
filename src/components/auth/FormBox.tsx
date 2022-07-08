@@ -24,7 +24,7 @@ const FormBox: FunctionComponent<PropsType> = ({
         />
       </ImgBox>
       <LoginContainer>
-        <LoginContainerBox>
+        <LoginContainerBox >
           <h1>{login ? 'LOGIN' : 'SignUp'}</h1>
           <LoginContainerTitle onSubmit={AuthSubmit}>
             {children}
