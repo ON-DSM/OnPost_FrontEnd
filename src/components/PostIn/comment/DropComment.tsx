@@ -1,13 +1,40 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback, ChangeEvent, FormEvent } from 'react';
+import { ShowComment } from '../../../apis/comment/commentShow';
+import { CreateComment } from '../../../apis/comment/createComment/Comment';
+import { DeleteComment } from '../../../apis/comment/deleteComment';
+import { CommentType } from '../../../apis/Interface';
+import { getToken } from '../../../utils/token';
 import * as S from './style';
 
-export default function DropComment() {
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const [value, setValue] = useState<string>('');
+interface PropsType {
+  comments: CommentType;
+}
+interface PropsTypetwo {
+  id: number;
+  ComArray: CommentType[] | undefined;
+  setArray: (ComArray: CommentType[]) => void;
+}
 
+export default function DropComment({ id, ComArray, setArray }: PropsTypetwo) {
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const [value, setValue] = useState<string>('');
   const textAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    console.log(event.target.value)
     setValue(event.target.value);
+    
   };
+
+  const ShowCom = useCallback(
+    () =>
+      ShowComment(id).then((data) => {
+        console.log(data);
+        setArray(data.subComments);
+      }),
+    [ComArray]
+  );
+
+  
 
   useEffect(() => {
     if (textareaRef && textareaRef.current) {
@@ -17,30 +44,42 @@ export default function DropComment() {
     }
   }, [value]);
 
+  useEffect(() => {
+    ShowCom();
+  }, []);
+
   return (
     <>
-        <S.ReplyBox>
-          <UserComment />
-          <S.ReplyInput ref={textareaRef} onChange={textAreaChange} />
-
-          <S.ButtonBox>
-            <S.ReplyButton>답글작성</S.ReplyButton>
-          </S.ButtonBox>
-        </S.ReplyBox>
+      <S.ReplyBox>
+        {ComArray && ComArray.map((com) => <BigComment comments={com} />)}
+        {getToken().accessToken && getToken().refreshToken && (
+          <form onSubmit={() => CreateComment(true,value, String(id))} >
+            <S.ReplyInput ref={textareaRef} onChange={textAreaChange} />
+            <S.ReplyButton type={value ? "button" : 'submit'}>답글작성</S.ReplyButton>
+          </form>
+        )}
+      </S.ReplyBox>
     </>
   );
 }
 
-function UserComment() {
+function BigComment({ comments }: PropsType) {
+  const Delete = (e:FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    DeleteComment(comments.id)
+  }
   return (
     <S.AllcommentBox>
       <S.UserCommentBox>
-        <S.UserImg src="/images/PostIn/ProfileImg.png" />
+        <S.UserImg src={comments.writer.profile} />
         <S.CommendBox>
-          <S.UserName>소환식</S.UserName>
-          <S.UserComment>
-            응ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ
-          </S.UserComment>
+          <S.UserName>{comments.writer.name}</S.UserName>
+          <S.UserComment>{comments.content}</S.UserComment>
+          {comments.writer.email === sessionStorage.getItem('email') && (
+            <form onSubmit={Delete}>
+              <button  style={{border: '0',outline: '0'}}>삭제</button>
+            </form>
+          )}
         </S.CommendBox>
       </S.UserCommentBox>
     </S.AllcommentBox>
