@@ -1,7 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import * as S from './styled';
-import CreatePost from '../../apis/post/create';
+import CreatePost from '../../apis/post/crud/post/create';
 import { PostRequestType } from '../../apis/Interface';
+import { useNavigate } from 'react-router';
 
 interface PropsType {
   SetOpenModal: (OpenModal: boolean) => void;
@@ -12,6 +13,7 @@ interface PropsType {
   SetText: (Text: PostRequestType) => void;
   seturl: (url: string) => void;
   url: string;
+  id: string | undefined;
 }
 
 function SubmitModal({
@@ -21,19 +23,18 @@ function SubmitModal({
   SetText,
   seturl,
   url,
+  id,
 }: PropsType) {
-  const [imgFile, setImgFile] = useState<null | File>(null);
-
   const Submit = (e: FormEvent<HTMLFormElement>) => {
-    const Email = sessionStorage.getItem('email')
-      ? sessionStorage.getItem('email')
-      : '';
     e.preventDefault();
-    if (Text.email === '' && Email === '') {
-      SetText({ ...Text, email: Email });
+    try{
+      CreatePost(Text,id)
+      Navi('/')
+    }catch(e){
+      console.log(e)
     }
-    CreatePost(Text);
   };
+  const Navi = useNavigate();
 
   const handleChangeFile = (event: ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
@@ -43,7 +44,6 @@ function SubmitModal({
     };
     if (event.target.files !== null) {
       reader.readAsDataURL(event.target.files[0]);
-      setImgFile(event.target.files[0]);
       SetText({ ...Text, profile: event.target.files[0] });
     }
   };
@@ -52,15 +52,18 @@ function SubmitModal({
     <S.Background onClick={() => SetOpenModal(false)}>
       <S.SubmitModalBox onSubmit={Submit} onClick={(e) => e.stopPropagation()}>
         <S.ImgBox>
-          {Text.profile && (
-            <S.FileImg src={Text.profile === 'string' ? Text.profile : ''} />
+          {(url || Text.profile) && (
+            <S.FileImg src={typeof Text.profile === 'string' ? Text.profile : url} />
           )}
         </S.ImgBox>
         <input
+        style={{display:"none"}}
           accept=".gif, .jpg, .png"
+          id='FileInput'
           type="file"
           onChange={handleChangeFile}
         />
+        <S.InputLabel htmlFor='FileInput'>파일 업로드</S.InputLabel>
         <S.InputBox>
           <S.Simplecontent
             name="introduce"
