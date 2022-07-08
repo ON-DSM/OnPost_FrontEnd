@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
 
 export const OverFlowBox = styled.div`
   position:relative;
@@ -27,18 +28,24 @@ export const HeaderContainer = styled.header<{ height: number }>`
   background-color: ${({ theme }) => theme.lightMode.white};
 `;
 
-export const HeaderLogo = styled.div`
+export const HeaderLogo = styled.a`
   font-weight: bold;
-  margin-right: 20%;
+  margin-right: 100px;
   cursor: pointer;
   font-size: 20px;
+`;
+export const StyledLink = styled(Link)`
+
+    text-decoration: none;
+    color: inherit;
 `;
 
 export const HeaderNavBar = styled.nav`
   display: flex;
-  justify-content: space-between;
+  justify-content:end;
+
   align-items: center;
-  width: 380px;
+  width: 250px;
   > a {
     all: unset;
     cursor: pointer;
@@ -54,5 +61,6 @@ export const SearchImage = styled.img`
 export const ProfileImg = styled.img`
   width:2rem;
   height:2rem;
+  margin-left:100px;
   border-radius:1rem;
 `

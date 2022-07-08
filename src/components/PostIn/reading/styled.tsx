@@ -9,7 +9,8 @@ export const MainContainer = styled.div`
 export const MainCenter = styled.div`
   padding-top: 50px;
   max-width: 1000px;
-  width:100%;
+  min-height: 100vh;
+  width: 100%;
   margin: 0 auto;
 `;
 export const PostName = styled.div`
@@ -27,7 +28,7 @@ export const PostTagBox = styled.div`
   display: flex;
   flex-wrap: wrap;
   max-width: 800px;
-  width:100%;
+  width: 100%;
   margin-top: 20px;
 `;
 
@@ -47,20 +48,20 @@ export const PostTag = styled.div`
 
 export const PostImg = styled.img`
   max-width: 800px;
-  width:100%;
+  max-height: 400px;
   margin-top: 10px;
 `;
 
-export const PostInfo = styled.div`
+export const PostInfo = styled.pre`
   width: 800px;
+  min-height: 50vh;
   margin-top: 50px;
-  margin-bottom: 100px;
 `;
 
 export const PostButtonBar = styled.div`
   display: flex;
   max-width: 800px;
-  width:100%;
+  width: 100%;
   justify-content: space-between;
   padding-bottom: 10px;
 `;
@@ -102,13 +103,13 @@ export const ProfileContainer = styled.div`
 
 export const CenterBox = styled.div`
   max-width: 1000px;
-  width:100%;
+  width: 100%;
   margin: auto;
 `;
 
 export const CenterInfoBox = styled.div`
   max-width: 800px;
-  width:100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
 `;
@@ -123,6 +124,7 @@ export const ProfileBox = styled.div`
 
 export const ProfileImg = styled.img`
   width: 100px;
+  border-radius: 50px;
   height: 100px;
 `;
 
@@ -192,6 +194,7 @@ export const ButtonBox = styled.div`
 export const CommentButton = styled.button`
   width: 120px;
   height: 35px;
+  float: right;
   font-size: 16px;
   font-weight: bold;
   border-radius: 8px;

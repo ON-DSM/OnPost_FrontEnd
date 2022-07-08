@@ -14,7 +14,7 @@ export const Line = styled.span`
     background-color:#999999;
 `
 
-export const UserCommentBox = styled.div`
+export const UserCommentBox = styled.pre`
     display:flex;
     flex-direction:row;
     margin:50px 0 25px 0;
@@ -23,6 +23,7 @@ export const UserCommentBox = styled.div`
 export const UserImg = styled.img`
     width:50px;
     height:50px;
+    border-radius:50px;
 `
 
 export const CommendBox = styled.div`
@@ -44,6 +45,7 @@ export const HideBox = styled.div`
     display:flex;
     flex-direction:row;
     align-items:center;
+    justify-content:space-between;
     margin-top:30px;
 `
 
@@ -82,6 +84,7 @@ export const ReplyInput = styled.textarea`
 export const ReplyButton = styled.button`
     width:100px;
     height:30px;
+    float: right;
     font-size:14px;
     font-weight:bold;
     border-radius:8px;
@@ -94,6 +97,6 @@ export const ReplyButton = styled.button`
 `
 
 
-export const AllcommentBox = styled.div`
-    border-bottom: 1px solid #999999;
+export const AllcommentBox = styled.pre`
+    
 `
