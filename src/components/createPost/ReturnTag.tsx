@@ -1,6 +1,6 @@
 import * as S from './styled';
 import React, { useState } from 'react';
-import { PostRequestType, TagType } from '../../apis/Interface';
+import { PostRequestType } from '../../apis/Interface';
 
 interface PropType {
   SetText: (Text: PostRequestType) => void;
@@ -10,6 +10,7 @@ interface PropType {
 export default function ReturnTag({ SetText, Text }: PropType) {
   const [Tags, setTag] = useState('');
   const ShowTag = Text.tags.split(',');
+  
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTag(e.target.value);
