@@ -1,49 +1,120 @@
 import PostItem from '../Post/PostItem';
 import styled from '@emotion/styled';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect, useCallback } from 'react';
+import { SortPost } from '../../apis/post/Sort/sortPost';
+import { MainPostType } from '../../apis/Interface';
 
 function Main() {
-  const [click, setclick] = useState(true);
+  const [click, setclick] = useState<boolean>(true);
+  const [isBottom, setBottom] = useState<boolean>(false);
+  const [n, setnew] = useState(0);
+  const [end, setend] = useState<boolean>(false);
+  const [like, setlike] = useState(0);
+  const [Obj, setobj] = useState<MainPostType>({
+    NEW: [],
+    LIKE: [],
+  });
 
-  const blog = () => {
-    setclick(true);
-  };
+  const Click = useCallback(() => {
+    return click ? 'NEW' : 'LIKE';
+  }, [click]);
 
-  const trade = () => {
-    setclick(false);
-  };
+  const Page = useCallback(
+    (touch: boolean) => {
+      return touch ? 'new' : 'like';
+    },
+    [click]
+  );
+
+  const CallChange = useCallback(
+    (touch: boolean) =>
+      Page(touch) === 'new'
+        ? setnew((pre) => pre + 1)
+        : setlike((pre) => pre + 1),
+    [click]
+  );
+
+  const CallPost = useCallback(
+    (touch: boolean) => {
+      SortPost(Click(), Page(touch) === 'new' ? n + 1 : like + 1).then((e) => {
+        if (e.length === 0) {
+          setend(() => true);
+        }
+        setBottom(() => false);
+        setobj((O) => {
+          return { ...O, [Click()]: [...O[Click()], ...e] };
+        });
+      });
+      CallChange(touch);
+    },
+    [like, n, click]
+  );
+
+  useEffect(() => {
+    const HandleScroll = () => {
+      const scrollTop = document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight;
+      const clientHeight = document.documentElement.clientHeight;
+      if (scrollTop + clientHeight >= scrollHeight && isBottom === false) {
+        setBottom(() => true);
+      }
+    };
+
+    window.addEventListener('scroll', HandleScroll);
+    return () => {
+      window.removeEventListener('scroll', HandleScroll);
+    };
+    document.body.style
+  }, []);
+
+  useEffect(() => {
+    if (!end) {
+      isBottom && CallPost(click);
+      setBottom(false);
+    }
+  }, [isBottom]);
 
   return (
     <>
       <MainContainer>
-        <MainImg src={'/images/main/MainImage.png'} alt="메인배너" />
+        <MainImg
+          src="/images/main/MainImage.png"
+          alt="메인배너"
+        />
         <SortBox>
-          <Blog onClick={blog}>
-            Blog
-            {click ? <EmBlog /> : null}
+          <Blog onClick={() => setclick(() => true)}>
+            최신순
+            {click && <EmBlog />}
           </Blog>
-          <TradeBox onClick={trade}>
-            Trend
-            {click ? null : <EmTrade />}
+          <TradeBox onClick={() => setclick(() => false)}>
+            인기순
+            {!click && <EmTrade />}
           </TradeBox>
         </SortBox>
       </MainContainer>
-
       <ReadContainer>
         <PostContainer>
-          <PostItem />
-          <PostItem />
-          <PostItem />
-          <PostItem />
-          <PostItem />
-          <PostItem />
-          <PostItem />
+          {Obj[Click()] &&
+            Obj[Click()].map((e) => {
+              return <PostItem key={e.id} Obj={e} />;
+            })}
         </PostContainer>
       </ReadContainer>
     </>
   );
 }
+
+const MainScroll = styled.div`
+  ::-webkit-scrollbar {
+      width: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background-color: #e4e4e4;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #303f9f;
+    }
+`
 
 const MainImg = styled.img`
   width: 1536px;
@@ -64,6 +135,8 @@ const MainContainer = styled.div`
   padding-top: 60px;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
+  
 `;
 const ReadContainer = styled.div`
   display: flex;
@@ -95,7 +168,7 @@ const EmBlog = styled.div`
   border-left: 11px solid transparent;
   border-right: 11px solid transparent;
   border-top: 16px solid black;
-  margin-left: 24px;
+  margin-left: 30px;
   margin-top: 8px;
 `;
 
