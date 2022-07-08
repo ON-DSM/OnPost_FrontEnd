@@ -10,6 +10,6 @@ export interface loginResponseType {
   refreshToken: string;
 }
 
-export const login = async (Text: loginReqeustType) => {
-  return await instance.post<loginResponseType>('/auth/login', Text);
+export const login =  (Text: loginReqeustType) => {
+  return instance.post<loginResponseType>('/auth/login', Text);
 };
