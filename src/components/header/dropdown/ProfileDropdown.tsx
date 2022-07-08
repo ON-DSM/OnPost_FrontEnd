@@ -1,5 +1,4 @@
 import * as S from './style'
-import { Link } from "react-router-dom";
 import { clearStorege } from "../../../utils/token";
 import { DataInfoType } from '../../../apis/Interface';
 
@@ -15,6 +14,7 @@ function ProfileDropDown({ SetDropDown,setSet,data}: PropsType) {
     clearStorege();
     window.location.reload();
   }
+
   return (
     <S.Background onClick={() => SetDropDown(false)}>
       <S.DropDownBox onClick={e => e.stopPropagation()}>
@@ -43,11 +43,7 @@ function ProfileDropDown({ SetDropDown,setSet,data}: PropsType) {
         <S.BtnBox>
           <div>
             <S.Button onClick={() => setSet(true)}>계정설정</S.Button>
-            <S.Button >
-              <Link to="/ProfilePage">
-                마이페이지
-              </Link>
-            </S.Button>
+
           </div>
           <S.Button onClick={Clear}>로그아웃</S.Button>
         </S.BtnBox>
