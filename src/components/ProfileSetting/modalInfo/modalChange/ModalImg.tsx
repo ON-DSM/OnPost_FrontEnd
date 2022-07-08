@@ -31,9 +31,6 @@ export default function ModalImg({ setvalue, value }: PropType) {
           style={{ display: 'none' }}
           onChange={handleChangeFile}
         />
-        <S.ImgRemove onClick={() => setImgBase64('/images/Modal/Standard.svg')}>
-          이미지 삭제
-        </S.ImgRemove>
         <S.ImgUplord htmlFor="image-input">이미지 업로드</S.ImgUplord>
       </S.ImgUplordBox>
     </>
