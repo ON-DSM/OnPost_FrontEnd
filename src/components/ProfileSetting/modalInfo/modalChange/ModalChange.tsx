@@ -1,45 +1,44 @@
-import React, { ChangeEvent , useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { PasswordType } from '../../../../apis/Interface';
 import * as S from '../styled';
 import ModalPassword from './ModalPassword';
-import {DataInfoType} from '../../../../apis/Interface'
-import { RePassword } from '../../../../apis/user/post/password';
+import { DataInfoType } from '../../../../apis/Interface';
+import { SetPassword } from '../../../../apis/user/post/password';
 import { customToast } from '../../../../utils/toast';
 
-
-interface PropType{
+interface PropType {
   setvalue: (value: DataInfoType) => void;
-  value: DataInfoType,
+  value: DataInfoType;
 }
 
-
-
 const clearpass = {
-    password: '',
-    oldpass:'',
-  }
+  newPassword: '',
+  originPassword: '',
+};
 
-export default function InfoChange({setvalue,value}:PropType) {
+export default function InfoChange({ setvalue, value }: PropType) {
   const [change, setchange] = useState<number>(0);
   const [Custom, setCustom] = useState<string>('');
-  
-  const [pass,setpass] = useState<PasswordType>({...clearpass})
+
+  const [pass, setpass] = useState<PasswordType>({ ...clearpass });
 
   const ButtonOn = (id: string) => {
     setchange(0);
-    if(Custom !== value[id as keyof DataInfoType] && Custom !== ''){    if(id === 'name' ){
-    setvalue({ ...value, [id]: Custom.slice(0,10)});
-    } else if(id === 'introduce'){
-      setvalue({ ...value, [id]: Custom.slice(0,60) });
-    }
-  }else if(id === 'password' && pass.oldpass !== '' && pass.password !== ''){
-    if(pass.password !== pass.oldpass){
-        RePassword(pass)
-        customToast("새 비밀번호는 8자 이상, 20자 이하이여야 합니다.","Error")
-      }else {
-        
+    if (Custom !== value[id as keyof DataInfoType] && Custom !== '') {
+      if (id === 'name') {
+        setvalue({ ...value, [id]: Custom.slice(0, 10) });
+      } else if (id === 'introduce') {
+        setvalue({ ...value, [id]: Custom.slice(0, 60) });
       }
-      setpass({...clearpass})
+    } else if (
+      id === 'password' &&
+      pass.originPassword !== '' &&
+      pass.newPassword !== ''
+    ) {
+      if (pass.newPassword !== pass.originPassword) {
+        SetPassword(pass);
+      }
+      setpass({ ...clearpass });
     }
   };
 
@@ -53,10 +52,9 @@ export default function InfoChange({setvalue,value}:PropType) {
     setCustom(value.introduce);
   };
 
-
-  const InfoChange = (e:ChangeEvent<HTMLInputElement>) =>{
-    setCustom(e.target.value)
-  }
+  const InfoChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setCustom(e.target.value);
+  };
 
   const changed = [
     ButtonNick,
@@ -75,10 +73,11 @@ export default function InfoChange({setvalue,value}:PropType) {
   return (
     <>
       <S.ProfileInfo>
-        {change === 1 ? (
+        <S.Text>{value.email}</S.Text>
+        {change === 2 ? (
           <S.UserInfoInput
             name="name"
-            value={change === 1 ? Custom : value.name}
+            value={change === 2 ? Custom : value.name}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setCustom(e.target.value)
             }
@@ -86,10 +85,10 @@ export default function InfoChange({setvalue,value}:PropType) {
         ) : (
           <S.Text>{value.name}</S.Text>
         )}
-        {change === 2 ? (
+        {change === 3 ? (
           <S.UserInfoInput
             name="introduce"
-            value={change === 2 ? Custom : value.introduce}
+            value={change === 3 ? Custom : value.introduce}
             onChange={InfoChange}
           />
         ) : (
@@ -97,9 +96,7 @@ export default function InfoChange({setvalue,value}:PropType) {
             {value.introduce === null ? '소개해 주세요!' : value.introduce}
           </S.Text>
         )}
-        <S.Text >
-          {value.email}
-        </S.Text>
+
         {change === 4 ? (
           <ModalPassword setpass={setpass} pass={pass} />
         ) : (
@@ -112,13 +109,29 @@ export default function InfoChange({setvalue,value}:PropType) {
       <S.ProfilebuttonBox>
         {Array.from(Array(4).keys()).map((num) => (
           <>
-            <S.Profilebutton
-              onClick={() => {
-                num + 1 == change ? unchanged[num]() : changed[num]();
-              }}
-            >
-              {num == 2 ? "인증" : change === num + 1 ? '완료' : '변경'}
-            </S.Profilebutton>
+            {num !== 0 ? (
+              num !== 3 ? (
+                <S.Profilebutton
+                  color={num + 1 == change ? '#001970' : ''}
+                  onClick={() => {
+                    num + 1 == change ? unchanged[num]() : changed[num]();
+                  }}
+                >
+                  {change === num + 1 ? '완료' : '변경'}
+                </S.Profilebutton>
+              ) : (
+                <S.PasswordButton
+                  color={num + 1 == change ? '#001970' : ''}
+                  onClick={() => {
+                    num + 1 == change ? unchanged[num]() : changed[num]();
+                  }}
+                >
+                  {change === 4 ? '변경 완료' : '비밀번호 변경'}
+                </S.PasswordButton>
+              )
+            ) : (
+              <S.Block />
+            )}
           </>
         ))}
         <S.Block />
