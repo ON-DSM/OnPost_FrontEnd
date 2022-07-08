@@ -4,7 +4,6 @@ import LoginPage from './pages/auth/Login';
 import SignupPage from './pages/auth/Signup';
 import Notfound from './pages/404';
 import CreatePost from './pages/CreatePostPage';
-import RelatePage from './pages/RelatePage';
 import ReadingPost from './pages/PostIn';
 import SearchResult from './pages/SearchResult';
 import Header from './components/header/main';
@@ -16,18 +15,15 @@ function App() {
     <StyleProvider>
       <Header />
       <Routes>
-        
         <Route path="/" element={<Main />} />
         <Route path="/404" element={<Notfound />} />
-        <Route path="/post/CreatePostPage" element={<CreatePost />} />
+        <Route path="/post/CreatePostPage/:id" element={<CreatePost />} />
         <Route path="/auth/Signup" element={<SignupPage />} />
         <Route path="/auth/Login" element={<LoginPage />} />
-        <Route path="/ProfilePage" element={<RelatePage />} />
-        <Route path="/PostName::id" element={<ReadingPost />} />
+        <Route path="/PostName/:id" element={<ReadingPost />} />
         <Route path="/SearchResult" element={<SearchResult />} />
-        <Route path="/SearchResult/PostName::id" element={<ReadingPost />} />
-        <Route path="/ProfilePage/PostName::id" element={<ReadingPost />} />
-
+        <Route path="/SearchResult/PostName/:id" element={<ReadingPost />} />
+        <Route path="/ProfilePage/PostName/:id" element={<ReadingPost />} />
       </Routes>
       <ToastContainer />
     </StyleProvider>
