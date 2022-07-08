@@ -11,12 +11,7 @@ export default function SearchPost() {
         {true ? (
           <ReadContainer>
             <PostContainer>
-              <PostItem />
-              <PostItem />
-              <PostItem />
-              <PostItem />
-              <PostItem />
-              <PostItem />
+             
             </PostContainer>
           </ReadContainer>
         ) : (
