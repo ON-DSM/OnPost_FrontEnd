@@ -2,14 +2,9 @@ import React, { ChangeEvent, useState } from 'react';
 import { PasswordType } from '../../../../apis/Interface';
 import * as S from '../styled';
 
-interface PassType{
-    password:string;
-    oldpass:string; 
-}
-
 interface PropType{
-    setpass: (pass: PassType) => void;
-    pass:PassType
+    setpass: (pass: PasswordType) => void;
+    pass:PasswordType
 }
 
 export default function ModalPassword({setpass,pass}:PropType) {
@@ -19,15 +14,15 @@ export default function ModalPassword({setpass,pass}:PropType) {
     return (
         <>
         <S.UserInfoInput
-            name="oldpass"
+            name="originPassword"
             onChange={Onchange}
-            value={pass.oldpass}
+            value={pass.originPassword}
             placeholder="현재 비밀번호"
         />
         <S.UserInfoInput
-            name="password"
+            name="newPassword"
             onChange={Onchange}
-            value={pass.password}
+            value={pass.newPassword}
             placeholder="새 비밀번호"
         />
         </>
