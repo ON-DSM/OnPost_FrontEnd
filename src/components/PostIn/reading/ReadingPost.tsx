@@ -1,104 +1,161 @@
 import * as S from './styled';
-import TrendPost from "../trend/TrendPost";
-import Comment from "../comment/Comment";
-import { useState,useEffect,useRef } from "react";
+import Comment from '../comment/Comment';
+import { useState, useEffect, useRef } from 'react';
+import { useNavigate, useParams } from 'react-router';
+import { GetterPostIn } from '../../../apis/post/crud/get/PostIn';
+import { PostLike } from '../../../apis/post/crud/post/like';
+import { getToken } from '../../../utils/token';
+import { DeletePost } from '../../../apis/post/crud/delete/deletePost';
+import { CreateComment } from '../../../apis/comment/createComment/Comment';
+import { useRecoilState } from 'recoil';
+import { LastPost } from '../../../recoil/proflie';
+import { ShowComment } from '../../../apis/comment/commentShow';
+import { DeleteComment } from '../../../apis/comment/deleteComment';
+import instance from '../../../apis/default';
 
+export default function ReadingPost() {
+  const { id } = useParams();
+  const Navi = useNavigate();
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const [isLike, setLike] = useState<boolean>(true);
+  const [value, setValue] = useState<string>('');
+  const [Post, setPost] = useRecoilState(LastPost);
 
-export default function ReadingPost(){
-    
-    const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-    
-    const [value, setValue] = useState<string>("");
+  const CommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setValue(event.target.value);
+  };
 
-    const textAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setValue(event.target.value);
-      };
-    
-      useEffect(() => {
-        if (textareaRef && textareaRef.current) {
-          textareaRef.current.style.height = "0px";
-          const scrollHeight = textareaRef.current.scrollHeight;
-          textareaRef.current.style.height = scrollHeight + "px";
-        }
-      }, [value]);
-    return(
-            <S.MainContainer>
-                <S.MainCenter>
-                    <S.PostName>제목이름입니당</S.PostName>
-                    <S.PostTime>2022-03-30</S.PostTime>
-                    <S.PostTagBox>
-                        <S.PostTag>#태그입니다</S.PostTag>
-                        <S.PostTag>#태그입니다</S.PostTag>
-                        <S.PostTag>#태그입니다</S.PostTag>
-                        <S.PostTag>#태그입니다</S.PostTag>
-                        <S.PostTag>#태그입니다</S.PostTag>
-                        <S.PostTag>#태그입니다</S.PostTag>
-                        <S.PostTag>#태그입니다</S.PostTag>
-                        <S.PostTag>#태그입니다</S.PostTag>
-                        <S.PostTag>#태그입니다</S.PostTag>
-                        <S.PostTag>#태그입니다</S.PostTag>
-                        <S.PostTag>#태그입니다</S.PostTag>
+  useEffect(() => {
+    if (textareaRef && textareaRef.current) {
+      textareaRef.current.style.height = '0px';
+      const scrollHeight = textareaRef.current.scrollHeight;
+      textareaRef.current.style.height = scrollHeight + 'px';
+    }
+  }, [value]);
 
-                    </S.PostTagBox>
-                    <S.PostImg src="/images/PostIn/PostInImg.png"/>
-                    
-                    <S.PostInfo>
-                    먼저 Product Language란 무엇일까요? 아마 Product Language라는 말 자체가 생소하신 분들도 많으실 겁니다. 하지만 디자인 시스템이라고 하면 좀 익숙하신 분들도 계시겠죠? Product Language는 디자인 시스템의 확장판이라고 보시면 이해가 수월할 것 같습니다. 즉 일반적인 디자인 시스템이 디자인에 한정된 내용을 다루는 경향이 있다고 한다면, Product Language는 제품을 만드는 구성원 모두가 공유하고 사용하며 만들어가는 언어라고 할 수 있어요.
-                    </S.PostInfo>
+  const ClickLike = () => {
+      if (getToken().accessToken && getToken().refreshToken) {
+        const Data = {
+          email: sessionStorage.getItem('email'),
+          postId: Post.id,
+        };
+        console.log(Data);
+        instance.post(isLike ? '/post/like' : '/post/unlike', Data, {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
+          },
+        }).then(() => setLike(!isLike));
+      }
+    ComDel(51, 1);
+  };
 
-                    <S.PostButtonBar>
-                        <S.ButtonCombine>
-                            <S.PostButtonBox>
-                                <S.PostButtonIcon src="/images/PostIn/Heart.svg"/>
-                                <S.PostButtonName>200</S.PostButtonName>
-                            </S.PostButtonBox>
-                            <S.PostButtonBox>
-                                <S.PostButtonName>공유하기</S.PostButtonName>
-                                <S.PostButtonIcon src="/images/PostIn/Share.png"/>
-                            </S.PostButtonBox>
-                        </S.ButtonCombine>
+  const Delete = () => {
+    DeletePost(Post.id);
+    Navi('/');
+  };
 
-                        <S.ButtonCombine>
-                            <S.PostButtonBox>
-                                <S.PostButtonName>수정하기</S.PostButtonName>
-                                <S.PostButtonIcon src="/images/PostIn/Write.png"/>
-                                
-                            </S.PostButtonBox>
-                            <S.PostButtonBox>
-                                <S.PostButtonName>삭제하기</S.PostButtonName>
-                                <S.PostButtonIcon src="/images/PostIn/Trash.png"/>
-                                
-                            </S.PostButtonBox>
-                        </S.ButtonCombine>
-                    </S.PostButtonBar>
-                </S.MainCenter>
-                <S.ProfileContainer>
-                    <S.CenterBox >
-                        <S.CenterInfoBox >
-                            <S.ProfileBox>
-                                <S.ProfileImg src="/images/PostIn/ProfileImg.png"/>
-                                <S.ProfileInfo>
-                                    <S.ProfileName>나아키인베</S.ProfileName>
-                                    <S.ProfileSubName>앙기모띠띠띠띠ㅣ띠띠</S.ProfileSubName>
-                                    <S.ProfileFollow>Follow</S.ProfileFollow>
-                                </S.ProfileInfo>
-                            </S.ProfileBox>
-                            <S.Line />
-                            <S.CommentSum><S.Num>20</S.Num>개의 댓글</S.CommentSum>
-                            <form>
-                                    <S.CommentInput 
-                                        ref={textareaRef}
-                                        onChange={textAreaChange}
-                                    />
-                                    <S.ButtonBox>
-                                        <S.CommentButton>댓글 작성</S.CommentButton>
-                                    </S.ButtonBox>
-                            </form>
-                            <Comment />                     
-                        </S.CenterInfoBox>
-                    </S.CenterBox>
-                </S.ProfileContainer>
-            </S.MainContainer>
-    );   
+  const ComDel = (id: number, index: number) => {
+    const arr = Post.comments.filter((d, i) => index !== i);
+    ///setPost({...Post,comments: arr})
+    console.log(arr);
+    console.log(Post.comments);
+    DeleteComment(id);
+  };
+
+  useEffect(() => {
+    GetterPostIn(id).then((data) => {
+      const Data = data.data;
+      setPost(() => Data);
+      !Data.doLike &&
+        setPost((setdata) => {
+          return { ...setdata, like: Data.like - 1 };
+        });
+      setLike(() => Data.doLike);
+      console.log(Data);
+    });
+    console.log(Post.profile);
+  }, []);
+
+  return (
+    <S.MainContainer>
+      <S.MainCenter>
+        <S.PostName>{Post.title}</S.PostName>
+        <S.PostTime>{Post.createAt}</S.PostTime>
+        <S.PostTagBox>
+          {Post.tags !== null &&
+            Post.tags
+              .split(',')
+              .map((T, idx) => <S.PostTag key={idx}>{T}</S.PostTag>)}
+        </S.PostTagBox>
+        <S.PostImg src={Post.profile !== '' ? Post.profile : ''} />
+
+        <S.PostInfo>{Post.content}</S.PostInfo>
+
+        <S.PostButtonBar>
+          <S.PostButtonBox
+            onClick={ClickLike}
+            style={{ backgroundColor: !isLike ? '#86DFFF' : '' }}
+          >
+            <S.PostButtonIcon src="/images/PostIn/Heart.svg" />
+            <S.PostButtonName>
+              {!isLike ? Post.like + 1 : Post.like}
+            </S.PostButtonName>
+          </S.PostButtonBox>
+
+          {sessionStorage.getItem('email') === Post.writer.email && (
+            <S.ButtonCombine>
+              <S.PostButtonBox>
+                <S.PostButtonName
+                  onClick={() =>
+                    Navi(`/post/CreatePostPage/recent=:${Post.id}`)
+                  }
+                >
+                  수정하기
+                </S.PostButtonName>
+                <S.PostButtonIcon src="/images/PostIn/Write.png" />
+              </S.PostButtonBox>
+              <S.PostButtonBox>
+                <S.PostButtonName onClick={Delete}>삭제하기</S.PostButtonName>
+                <S.PostButtonIcon src="/images/PostIn/Trash.png" />
+              </S.PostButtonBox>
+            </S.ButtonCombine>
+          )}
+        </S.PostButtonBar>
+      </S.MainCenter>
+      <S.ProfileContainer>
+        <S.CenterBox>
+          <S.CenterInfoBox>
+            <S.ProfileBox>
+              <S.ProfileImg src={Post.writer.profile} />
+              <S.ProfileInfo>
+                <S.ProfileName>{Post.writer.name}</S.ProfileName>
+                <S.ProfileSubName>{Post.writer.introduce}</S.ProfileSubName>
+              </S.ProfileInfo>
+            </S.ProfileBox>
+            <S.Line />
+            <S.CommentSum>
+              <S.Num>{Post.comments.length}</S.Num>개의 댓글
+            </S.CommentSum>
+            {getToken().accessToken && getToken().refreshToken && (
+              <form
+                onSubmit={() => value !== '' && CreateComment(false, value, id)}
+              >
+                <S.CommentInput
+                  onChange={CommentChange}
+                  ref={textareaRef}
+                  value={value}
+                />
+                <S.CommentButton type={value === '' ? 'button' : 'submit'}>
+                  댓글 작성
+                </S.CommentButton>
+              </form>
+            )}
+            {Post.comments.map((comment) => (
+              <Comment comments={comment} />
+            ))}
+          </S.CenterInfoBox>
+        </S.CenterBox>
+      </S.ProfileContainer>
+    </S.MainContainer>
+  );
 }
-
