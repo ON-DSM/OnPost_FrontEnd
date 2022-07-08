@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import * as S from './style';
 import { clearStorege, getToken } from '../../../utils/token';
 import MyPage from '../MyPage';
@@ -6,9 +6,8 @@ import ProfileDropDown from '../dropdown/ProfileDropdown';
 import ProfileSetting from '../../ProfileSetting/ProfileSetting';
 import Belling from '../Belling/Belling';
 import Search from '../search/SearchReuslt';
-import { Link } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { ProfileState, TokenClock } from '../../../recoil/proflie';
+import { useRecoilState } from 'recoil';
+import { ProfileState, RecentToken } from '../../../recoil/proflie';
 import { getinfo } from '../../../apis/user/get/getinfo';
 
 function Header() {
@@ -26,50 +25,39 @@ function Header() {
       if (window.scrollY > 500) setHeight(50);
       else setHeight(60);
     });
-
-      getinfo()
-        .then((data) => {
-          sessionStorage.setItem('email', data.email);
-          newdata(data);
-          console.log(data)
-        })
-        .catch((e) => console.log(e));
-
-  }, []);
+    
+    getinfo()
+      .then((data) => {
+        sessionStorage.setItem('email', data.email);
+        newdata(data);
+      })
+      .catch((e) => console.log(e));
+      console.log(getToken().accessToken)
+  }, [getToken().accessToken && getToken().refreshToken]);
 
   return (
     <S.OverFlowBox>
       <>
         <S.HeaderContainer height={height}>
           <S.HeaderLogo>
-            <Link to="/">온포스트</Link>
+            <S.StyledLink to="/" style={{ textDecoration: 'none' }}>
+                온포스트
+            </S.StyledLink>
           </S.HeaderLogo>
-
           <S.HeaderNavBar>
             {getToken().accessToken && getToken().refreshToken ? (
               <>
-                <Link to="/post/CreatePostPage">글작성하기</Link>
-                <S.BallImg
-                  onClick={() => setbell(!Bell)}
-                  src="/svg/alarmIcon.svg"
-                />
+                <S.StyledLink to="/post/CreatePostPage/0">
+                  글작성하기
+                </S.StyledLink>
                 <S.ProfileImg
                   onClick={() => SetDropDown(true)}
                   src={typeof data.profile === 'string' ? data.profile : ''}
                 />
               </>
             ) : (
-              <Link to="/auth/Login">로그인/회원가입</Link>
+              <S.StyledLink to="/auth/Login">로그인/회원가입</S.StyledLink>
             )}
-            <S.SearchImage
-              onClick={() => {
-                setinput(true);
-                setmain(true);
-                clearStorege;
-              }}
-              src="/images/Header/SearchIcon.png"
-              alt="검색"
-            />
           </S.HeaderNavBar>
         </S.HeaderContainer>
 
