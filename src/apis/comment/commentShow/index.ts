@@ -1,16 +1,14 @@
 import instance from '../../default';
-import { example } from './example';
 
-export const comment = () => {
-  instance.get('/comment/show', {
-      params: {
-        example,
-      }
+export const ShowComment = async(id: number) => {
+  
+  return await instance.get('/comment/show', {
+      params: {id:id}
     })
     .then((res) => {
-      console.log(res.data);
+      return res.data;
     })
     .catch((err) => {
-      console.log(err);
+      console.log(err.config);
     });
 };
