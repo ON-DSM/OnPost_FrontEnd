@@ -59,12 +59,30 @@ export const LastPost = atom<I.Post>({
         },
         createAt: '',
         moreComment: 0,
-      }
-    ]
+      },
+    ],
   },
 });
 
-
+export const LastCommets = atom<I.AllComment>({
+  key: 'allComment',
+  default: {
+    comments: [
+      {
+        id: 0,
+        content: '',
+        writer: {
+          name: '',
+          introduce: '',
+          profile: '',
+          email: '',
+        },
+        createAt: '',
+        moreComment: 0,
+      },
+    ],
+  },
+});
 
 export const RecentToken = atom<I.TokenType>({
   key: 'onChangeToken',
