@@ -10,9 +10,12 @@ import CheckingBox from '../../../components/auth/CheckingBox';
 import InputBox from '../../../components/auth/InputBox';
 import { customToast } from '../../../utils/toast';
 import { useNavigate } from 'react-router';
+import { useSetRecoilState } from 'recoil';
+import { RecentToken } from '../../../recoil/proflie';
 
 function LoginPage() {
   const Navigate = useNavigate()
+  const TokenSet = useSetRecoilState(RecentToken);
   const { handleChange, Text } = useForm<loginReqeustType>({
     email: 'lokijoji2@gmail.com',
     password: 'iggso821',
@@ -23,7 +26,12 @@ function LoginPage() {
     try {
       const res = await login(Text);
       setToken(res.data.accessToken, res.data.refreshToken);
-      Navigate('/');
+      TokenSet({accessToken: res.data.accessToken,refreshToken:res.data.refreshToken})
+       Navigate('/');
+      setTimeout(() => customToast('로그인에 성공하셨습니다.', 'Success'),200)
+       
+      
+     
     } catch (err) {
       customToast('로그인에 실패하셨습니다.', 'Error');
     }
