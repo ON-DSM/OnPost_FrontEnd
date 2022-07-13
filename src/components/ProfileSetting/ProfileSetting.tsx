@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import ModalInfo from './modalInfo/ModalInfo';
+import NewModalInfo from './modalInfo/NewModal/MainModalinfo';
 import React, { useEffect } from 'react';
 
 interface PropsType {
@@ -32,7 +33,7 @@ export default function ProfileSetting({ setSet }: PropsType) {
       <DialogBox>
         <Backspace onClick={Setting} src='/images/Modal/ModalBack.png'/>
         <Information>
-          <ModalInfo />
+          <NewModalInfo />
         </Information>
       </DialogBox>
         <Backdrop
@@ -50,12 +51,12 @@ export default function ProfileSetting({ setSet }: PropsType) {
 const Backspace = styled.img`
   position:absolute;
   margin-left:95%;
-  margin-top:-100%;
+  margin-top:-70%;
 `
 
 const DialogBox = styled.dialog`
   width: 600px;
-  height: 650px;
+  height:480px;
   top: 50%;
   left: 50%;
   position: fixed;
@@ -64,7 +65,7 @@ const DialogBox = styled.dialog`
   flex-direction: row;
   align-items: center;
   border: none;
-  border-radius: 3px;
+  border-radius: 10px;
   box-shadow: 0 0 30px rgba(30, 30, 30, 0.185);
   box-sizing: border-box;
   background-color: white;
@@ -129,8 +130,7 @@ const Withdrawal = styled.span`
 const Information = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content:space-evenly;
-  margin-left: 25px;
+  margin: 100px 0 0 25px;
   width: 100%;
   height:100%
 `;
