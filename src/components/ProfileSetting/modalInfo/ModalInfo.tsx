@@ -14,7 +14,7 @@ export default function ModalInfo() {
 
   useEffect(() => {
     if (Object.entries(data).toString() !== Object.entries(value).toString()) {
-      DataInfo(value).then((Data) => setdata(Data!));
+
     }
   });
 
@@ -22,7 +22,7 @@ export default function ModalInfo() {
     <>
       <div>
         <S.ProfileImgBox>
-          <ModalImg setvalue={setvalue} value={value} />
+          <ModalImg />
         </S.ProfileImgBox>
         <S.UserInfoBox>
           <S.ProfileInfoBox>
