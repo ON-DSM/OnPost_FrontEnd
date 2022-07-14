@@ -1,9 +1,10 @@
-import styled from '@emotion/styled';
+import styled from '@emotion/styled/macro';
 
 export const MainContainer = styled.div`
   margin-top: 60px;
   padding-left: 300px;
   padding: 0;
+  overflow-x:hidden;
 `;
 
 export const MainCenter = styled.div`
@@ -54,8 +55,10 @@ export const PostImg = styled.img`
 
 export const PostInfo = styled.pre`
   width: 800px;
+  white-space:pre-wrap;
   min-height: 50vh;
-  margin-top: 50px;
+  margin: 50px 0 100px 0;
+  padding-left:20px;
 `;
 
 export const PostButtonBar = styled.div`
@@ -77,28 +80,54 @@ export const PostButtonName = styled.span`
 
 export const PostButtonIcon = styled.img`
   width: 16px;
+  height:16px;
+  opacity: 50%;
 `;
 
-export const PostButtonBox = styled.button`
-  padding-left: 5px;
-  padding-right: 5px;
+export const PostButtonBox = styled.div`
+  padding: 0 10px 0 10px;
   margin-left: 5px;
   height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 5px;
-  border: 1px solid black;
-  color: #333333;
+  border-radius: 20px;
+  font-size: 14px;
+  border: 1px solid #999999;
+  color: #999999;
   :hover {
-    border: 1px solid #303f9f;
-    color: #303f9f;
-    background-color: #e4eaff;
+    border: 1px solid #444444;
+    color: #444444;
+    background-color: #D1D1D1;
   }
+  &:hover ${PostButtonIcon}{
+    opacity:90%;
+  }
+  cursor: pointer;
 `;
+
+export const OtherButtonBox = styled.div`
+  padding: 0 10px 0 10px;
+  margin-left: 5px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  font-size: 14px;
+  border: 1px solid #777777;
+  color: white;
+  background-color:#6C63FF;
+  :hover {
+    border: 1px solid #444444;
+    color: white;
+    background-color: #666AD1;
+  }
+`
 
 export const ProfileContainer = styled.div`
   background-color: #f8f8f8;
+  padding-bottom:50px;
 `;
 
 export const CenterBox = styled.div`
@@ -125,6 +154,7 @@ export const ProfileBox = styled.div`
 export const ProfileImg = styled.img`
   width: 100px;
   border-radius: 50px;
+  object-fit: cover;
   height: 100px;
 `;
 
@@ -143,6 +173,7 @@ export const ProfileName = styled.span`
 
 export const ProfileSubName = styled.span`
   font-size: 14px;
+  width:350px;
 `;
 
 export const ProfileFollow = styled.button`
@@ -195,6 +226,7 @@ export const CommentButton = styled.button`
   width: 120px;
   height: 35px;
   float: right;
+  cursor: pointer;
   font-size: 16px;
   font-weight: bold;
   border-radius: 8px;
