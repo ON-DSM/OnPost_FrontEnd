@@ -25,7 +25,7 @@ export default function PostItem({ Obj }: PT) {
             {Obj.tags ? (
               Obj.tags
                 .split(',')
-                .map((e, index) => <PostTag key={index}>{e}</PostTag>)
+                .map((e, index) => <PostTag key={index}>{"#"+e}</PostTag>)
             ) : (
               <span style={{ display: 'block', height: '23.2px' }} />
             )}
@@ -69,6 +69,7 @@ const PostImg = styled.img`
   width: 176px;
   height: 176px;
   border-radius: 5px;
+  object-fit: cover;
 `;
 
 const PostDay = styled.span`
@@ -150,6 +151,7 @@ const PostUserBox = styled.div`
 const PostProfileImg = styled.img`
   margin-right: 8px;
   border-radius: 14px;
+  object-fit:cover;
   width: 28px;
   height: 28px;
 `;
