@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 export const OverFlowBox = styled.div`
   position:relative;
   overflow:hidden;
+  
 `
 
 export const BallImg = styled.img`
@@ -61,6 +62,8 @@ export const SearchImage = styled.img`
 export const ProfileImg = styled.img`
   width:2rem;
   height:2rem;
+  cursor: pointer;
   margin-left:100px;
   border-radius:1rem;
+  object-fit: cover;
 `
