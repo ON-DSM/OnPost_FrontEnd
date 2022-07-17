@@ -1,17 +1,26 @@
 import * as S from './style';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import DropComment from './DropComment';
-import { CommentType, SubCommentType } from '../../../apis/Interface';
-import { DeleteComment } from '../../../apis/comment/deleteComment';
+import { CommentType } from '../../../apis/Interface';
 
-export default function Comment({ comments }: SubCommentType) {
+interface PropsType{
+  comments: CommentType;
+  ComDel: (id: number) => void;
+}
+
+export default function Comment( {comments,ComDel } : PropsType) {
   const [Open, setopen] = useState<boolean>(false);
+  const [commentCount,setComcount] = useState<number>(comments.moreComment);
   const [ComArray, setArray] = useState<CommentType[]>();
 
   const Delete = (e:FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    DeleteComment(comments.id)
+    ComDel(comments.id)
   }
+
+  useEffect(()=>{
+    setComcount(comments.moreComment)
+  },[comments.moreComment])
   return (
     <>
           <S.UserCommentBox>
@@ -22,16 +31,17 @@ export default function Comment({ comments }: SubCommentType) {
               <S.HideBox>
                 <div onClick={() => setopen(!Open)}>
                   <S.HideTitle>
-                    {comments.moreComment
-                      ? `${comments.moreComment}개의 댓글`
+                    {commentCount
+                      ? `${commentCount}개의 댓글`
                       : '댓글 달기'}
+
                   </S.HideTitle>
 
-                  <S.HideImg src="/images/PostIn/minus.png" />
+                  <S.HideImg src={`/images/PostIn/${Open ? "minus.png" : "plus.png"}`} />
                 </div>
                 {comments.writer.email === sessionStorage.getItem('email') && (
                   <form onSubmit={Delete} style={{border: '0',outline: '0'}}>
-                    <button >삭제</button>
+                    <button style={{all: 'unset',cursor: 'pointer'}} ><img src='/svg/Postin/RedTrasj.svg'/></button>
                   </form>
                   
                 )}
@@ -39,7 +49,7 @@ export default function Comment({ comments }: SubCommentType) {
             </S.CommendBox>
           </S.UserCommentBox>
       {Open && (
-        <DropComment id={comments.id} ComArray={ComArray} setArray={setArray} />
+        <DropComment setComcount={setComcount} id={comments.id} ComArray={ComArray ? ComArray : []} commentCount={commentCount} setArray={setArray} />
       )}
       <S.Line />
     </>
