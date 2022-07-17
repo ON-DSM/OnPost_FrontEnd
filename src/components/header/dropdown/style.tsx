@@ -30,7 +30,7 @@ export const Background = styled.div`
 `;
 
 export const DropDownBox = styled.div`
-  position: absolute;
+  position: fixed;
   top: 50px;
   border-radius: 5px;
   right: 60px;
