@@ -3,13 +3,14 @@ import styled from '@emotion/styled';
 import { useState, useEffect, useCallback } from 'react';
 import { SortPost } from '../../apis/post/Sort/sortPost';
 import { MainPostType } from '../../apis/Interface';
+import { getToken } from '../../utils/token';
 
 function Main() {
   const [click, setclick] = useState<boolean>(true);
   const [isBottom, setBottom] = useState<boolean>(false);
-  const [n, setnew] = useState(0);
+  const [n, setnew] = useState(1);
   const [end, setend] = useState<boolean>(false);
-  const [like, setlike] = useState(0);
+  const [like, setlike] = useState(1);
   const [Obj, setobj] = useState<MainPostType>({
     NEW: [],
     LIKE: [],
@@ -59,12 +60,22 @@ function Main() {
         setBottom(() => true);
       }
     };
+    setTimeout(() =>{
+    SortPost("NEW",1).then(e => {
+      setobj((O) => {
+        return { ...O, NEW: [...O.NEW, ...e] };
+      });
+    })
+    SortPost("LIKE",1).then(e => {
+      setobj((O) => {
+        return { ...O, LIKE: [...O.LIKE, ...e] };
+      });
+    })},500)
 
     window.addEventListener('scroll', HandleScroll);
     return () => {
       window.removeEventListener('scroll', HandleScroll);
     };
-    document.body.style
   }, []);
 
   useEffect(() => {
@@ -82,11 +93,11 @@ function Main() {
           alt="메인배너"
         />
         <SortBox>
-          <Blog onClick={() => setclick(() => true)}>
+          <Blog onClick={() => setclick(true)}>
             최신순
             {click && <EmBlog />}
           </Blog>
-          <TradeBox onClick={() => setclick(() => false)}>
+          <TradeBox onClick={() => setclick(false)}>
             인기순
             {!click && <EmTrade />}
           </TradeBox>
@@ -153,6 +164,7 @@ const SortBox = styled.div`
 `;
 const TradeBox = styled.div`
   font-size: 32px;
+  cursor: pointer;
 `;
 const EmTrade = styled.div`
   position: absolute;
@@ -174,6 +186,7 @@ const EmBlog = styled.div`
 
 const Blog = styled.div`
   font-size: 32px;
+  cursor: pointer;
 `;
 
 export default Main;
