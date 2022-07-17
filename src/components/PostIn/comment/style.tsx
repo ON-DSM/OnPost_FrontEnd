@@ -7,7 +7,7 @@ export const ButtonBox = styled.div`
 `
 
 
-export const Line = styled.span`
+export const Line = styled.div`
     height:1px;
     margin-bottom:10px;
     margin-top:50px;
@@ -24,6 +24,7 @@ export const UserImg = styled.img`
     width:50px;
     height:50px;
     border-radius:50px;
+    object-fit:cover;
 `
 
 export const CommendBox = styled.div`
@@ -39,6 +40,7 @@ export const UserName = styled.span`
 
 export const UserComment = styled.div`
     margin-top:10px;
+    white-space:pre-wrap;
 `
 
 export const HideBox = styled.div`
@@ -51,12 +53,14 @@ export const HideBox = styled.div`
 
 export const HideImg = styled.img`
     width:14px;
+    cursor: pointer;
     margin:4px 0 0 8px;
 `
 
 export const HideTitle = styled.span`
     font-size:15px;
     font-weight:bold;
+    cursor: pointer;
     color:#303F9F;
 `
 
@@ -84,6 +88,7 @@ export const ReplyInput = styled.textarea`
 export const ReplyButton = styled.button`
     width:100px;
     height:30px;
+    cursor: pointer;
     float: right;
     font-size:14px;
     font-weight:bold;
