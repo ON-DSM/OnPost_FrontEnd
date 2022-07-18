@@ -165,7 +165,7 @@ export const Background = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 106%;
+  height: 100%;
   position: absolute;
   z-index: 2;
 `;
@@ -226,4 +226,21 @@ export const InputLabel = styled.label`
   margin: 5px 0 10px 0;
   text-align: center;
   cursor: pointer;
+`;
+
+export const ImgUplord = styled.div`
+  width: 200px;
+  height: 200px;
+  font-size: 14px;
+  text-align: center;
+  background-color: #000000;
+  opacity: 50%;
+`;
+
+export const ImgCamara = styled.img`
+  position: absolute;
+  display: block;
+  top: 35%;
+  left: 49.5%;
+  width: 19.2px;
 `;
