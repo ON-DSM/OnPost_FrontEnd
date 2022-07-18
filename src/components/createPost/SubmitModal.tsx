@@ -3,6 +3,7 @@ import * as S from './styled';
 import CreatePost from '../../apis/post/crud/post/create';
 import { PostRequestType } from '../../apis/Interface';
 import { useNavigate } from 'react-router';
+import { customToast } from '../../utils/toast';
 
 interface PropsType {
   SetOpenModal: (OpenModal: boolean) => void;
@@ -27,12 +28,8 @@ function SubmitModal({
 }: PropsType) {
   const Submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try{
-      CreatePost(Text,id)
-      Navi('/')
-    }catch(e){
-      console.log(e)
-    }
+    CreatePost(Text, id).then(() => Navi('/')).catch(() =>
+    customToast("게시물 작성 형식이 맞지 않습니다","Error"));
   };
   const Navi = useNavigate();
 
@@ -52,18 +49,26 @@ function SubmitModal({
     <S.Background onClick={() => SetOpenModal(false)}>
       <S.SubmitModalBox onSubmit={Submit} onClick={(e) => e.stopPropagation()}>
         <S.ImgBox>
-          {(url || Text.profile) && (
-            <S.FileImg src={typeof Text.profile === 'string' ? Text.profile : url} />
+          {url !== '' || Text.profile !== '' ? (
+            <S.FileImg
+              src={typeof Text.profile === 'string' ? Text.profile : url}
+            />
+          ) : (
+            <>
+              <S.ImgUplord />
+              <S.ImgCamara src="/svg/Camara.svg"/>
+            </>
           )}
         </S.ImgBox>
+
         <input
-        style={{display:"none"}}
+          style={{ display: 'none' }}
           accept=".gif, .jpg, .png"
-          id='FileInput'
+          id="FileInput"
           type="file"
           onChange={handleChangeFile}
         />
-        <S.InputLabel htmlFor='FileInput'>파일 업로드</S.InputLabel>
+        <S.InputLabel htmlFor="FileInput">파일 업로드</S.InputLabel>
         <S.InputBox>
           <S.Simplecontent
             name="introduce"
