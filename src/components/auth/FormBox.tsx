@@ -14,7 +14,7 @@ const FormBox: FunctionComponent<PropsType> = ({
   children,
 }) => {
   return (
-    <div>
+    <div >
       <ImgBox>
         <img
           // layout="responsive"
