@@ -9,7 +9,7 @@ interface PropType {
 
 export default function ReturnTag({ SetText, Text }: PropType) {
   const [Tags, setTag] = useState('');
-  const ShowTag = Text.tags.split(',');
+  const ShowTag = Text.tags !== null ?  Text.tags.split(',') : [];
   
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,7 +22,7 @@ export default function ReturnTag({ SetText, Text }: PropType) {
       Tags !== '' &&
       event.nativeEvent.isComposing === false
     ) {
-      SetText({ ...Text, tags: Text.tags !== '' ? Text.tags +  ',' + Tags : Text.tags + Tags});
+      SetText({ ...Text, tags: Text.tags !== '' ? Text.tags !== null ?  Text.tags +  ',' + Tags : Tags : Text.tags + Tags});
       setTag('');
     }
     if (event.code === 'Backspace' && Tags.length === 0) {
