@@ -27,8 +27,9 @@ function CreatePost() {
       SetText({ ...Text, email: Email! });
     }
     if (id !== '0') {
-      GetterPostIn(id).then((data) => SetText(() => data.data));
+      GetterPostIn(id).then((data) => {console.log(data.data);data.data && SetText(() => data.data)});
     }
+    console.log(Text)
   }, []);
 
   return (
