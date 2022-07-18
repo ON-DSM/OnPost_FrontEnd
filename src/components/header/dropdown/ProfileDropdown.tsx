@@ -35,7 +35,7 @@ function ProfileDropDown({ SetDropDown,setSet,data}: PropsType) {
             <img
               width={50}
               height={50}
-              style={{borderRadius: "50px"}}
+              style={{borderRadius: "50px",objectFit: 'cover'}}
               src={typeof data.profile === 'string' ? data.profile : ''}
             />
           </div>
