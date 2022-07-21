@@ -2,7 +2,7 @@ import instance from '../../../default';
 import { PostRequestType } from '../../../Interface';
 
 const CreatePost = (PostRequest: PostRequestType,id: string  | undefined) => {
-  try {
+
     const array = ['title', 'content', 'profile', 'introduce', 'tags', 'email'];
     const formData = new FormData();
     array.map((key) => {
@@ -15,14 +15,11 @@ const CreatePost = (PostRequest: PostRequestType,id: string  | undefined) => {
       } 
     });
     id !== '0' && formData.set('id',id as string)
-    instance[id === '0' ? 'post' : 'put'](`/post/${id === '0' ? 'create' : 'edit'}`, formData, {
+    return instance[id === '0' ? 'post' : 'put'](`/post/${id === '0' ? 'create' : 'edit'}`, formData, {
       headers: {
         Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
       },
     });
-  } catch (e) {
-    throw e;
-  }
 };
 
 export default CreatePost;
