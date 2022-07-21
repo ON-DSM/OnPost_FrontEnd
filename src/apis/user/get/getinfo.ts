@@ -8,7 +8,8 @@ export const getinfo = async () => {
     image: '이미지 경로',
     email: '이메일',
   };
-  const Data = await instance
+  console.log(sessionStorage.getItem('accessToken'))
+  return await instance
     .get('/member/info', {
       data: a,
       headers: {
@@ -18,5 +19,4 @@ export const getinfo = async () => {
       withCredentials: false,
     })
     .then((res) => res.data)
-  return Data;
 };
