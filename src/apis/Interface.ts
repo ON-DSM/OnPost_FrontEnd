@@ -61,7 +61,7 @@ export interface Post {
   tags: string;
   profile: string;
   createAt: string;
-  comments: [
+  comments: 
     {
       id: number;
       content: string;
@@ -73,8 +73,8 @@ export interface Post {
       },
       createAt: string;
       moreComment: number;
-    }
-  ]
+    }[]
+
 }
 
 export interface Page{
@@ -85,6 +85,10 @@ export interface Page{
 export interface MainPostType {
   NEW: PostList[];
   LIKE: PostList[];
+}
+
+export interface AllComment{
+  comments: CommentType[]
 }
 
 export interface CommentType{
